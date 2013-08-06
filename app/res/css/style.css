@@ -1,26 +1,20 @@
 body {
 	font-family: sans-serif;
+	min-width: 340px;
+}
+
+ul {
+	list-style: none;
+	display: inline;
 }
 
 .top-bar {
 	width: 100%;
 	border: 1px black solid;
-	min-width: 300px;
-}
-
-.nav-bar {
-	width: 50%;
-	max-width: 700px;
-	min-width: 460px;
-	border: 1px black solid;
-	margin: 0 auto;
-	height: 35px;
 }
 
 .title-bar {
 	width: 100%;
-	max-width: 960px;
-	margin: 0 auto;
 	border: 1px black solid;
 }
 
@@ -28,13 +22,18 @@ body {
 	text-align: center;
 }
 
-.content {
+.lower {
 	width: 100%;
-	max-width: 960px;
+	height: 100%;
 	border: 1px black solid;
-	margin: 0 auto;
-	height: 800px;
-	min-width: 300px;
+}
+
+.content {
+	border: 1px black solid;
+	height: 100%;
+	position: absolute;
+	top:82px;
+	right: 0px;
 }
 
 .loading {
@@ -43,13 +42,40 @@ body {
 	visibility: hidden;
 }
 
-/*make each menu take the whole page when on a mobile and hide the supper menu*/
-@media (max-width: 480px){
-	.nav-bar {
-		width: 100%;
-		min-width: 300px;
-	}
+.nav-pane {
+	width: 80%;
+	max-width: 300px;
+	min-width: 280px;
+	height: 100%;
+	border: 1px black solid;
+	position: relative;
+	left: 0px;
+	z-index: 9999;
+	margin: 0;
+}
 
+.page {
+	max-width: 1080px;
+	min-width: 300px;
+	margin: 0 auto;
+}
+
+.main {
+	font-weight: bold;	
+}
+
+.title {
+	font-weight: bold;
+	font-size: 1.2em;
+	border-top: 1px black solid;
+	border-bottom: 1px black dashed;
+}
+
+/*make each menu take the whole page when on a mobile and hide the supper menu*/
+@media (max-width: 900px){
+	.nav-pane {
+		left: -600px;
+	}
 }
 
 #view-nav {
@@ -58,4 +84,10 @@ body {
 	margin: 1%;
 	vertical-align: middle;
 	height: 100%;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: moz-none;
+	-ms-user-select: none;
+	user-select: none;
 }
