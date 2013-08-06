@@ -1,0 +1,61 @@
+body {
+	font-family: sans-serif;
+}
+
+.top-bar {
+	width: 100%;
+	border: 1px black solid;
+	min-width: 300px;
+}
+
+.nav-bar {
+	width: 50%;
+	max-width: 700px;
+	min-width: 460px;
+	border: 1px black solid;
+	margin: 0 auto;
+	height: 35px;
+}
+
+.title-bar {
+	width: 100%;
+	max-width: 960px;
+	margin: 0 auto;
+	border: 1px black solid;
+}
+
+.title-bar h1 {
+	text-align: center;
+}
+
+.content {
+	width: 100%;
+	max-width: 960px;
+	border: 1px black solid;
+	margin: 0 auto;
+	height: 800px;
+	min-width: 300px;
+}
+
+.loading {
+	float: right;
+	margin: 24px;
+	visibility: hidden;
+}
+
+/*make each menu take the whole page when on a mobile and hide the supper menu*/
+@media (max-width: 480px){
+	.nav-bar {
+		width: 100%;
+		min-width: 300px;
+	}
+
+}
+
+#view-nav {
+	float: left;
+	font-size: 3em;
+	margin: 1%;
+	vertical-align: middle;
+	height: 100%;
+}
