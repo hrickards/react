@@ -1,0 +1,51 @@
+body {
+	font-family: sans-serif;
+	min-width: 340px;
+	background-color: DCDCDC;
+}
+ul {
+	list-style: none;
+	display: inline;
+}
+.bill-view {
+	width: 600px;
+	border: 1px black solid;
+	margin: auto;
+	padding-top: 25px;
+	background-color: white;
+}
+.bill-image {
+	display: block;
+	margin: auto;
+}
+.bill-view h2 {
+	margin: auto;
+	width: 400px;
+	border-top: 1px black solid;
+	border-bottom: 1px black solid;
+	padding: 15px 0;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+.progress-bar {
+	margin: auto;
+	display: block;
+}
+.progress-box h3 {
+	text-align: center;
+}
+.summary-box {
+	width: 300px;
+	padding-bottom: 25px;
+	margin: auto;
+}
+.summary-box h3 {
+	text-align: center;
+}
+.summary-box p {
+	text-align: center;
+}
+.progress-box p {
+	text-align: center;
+}
