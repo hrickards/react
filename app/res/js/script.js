@@ -9,6 +9,39 @@ $('document').ready(function(){
 
 	resizeStuff();
 
+	$.ajax({
+    	url: 'http://harryrickards.com/api/bills.json',
+    	dataType: 'jsonp'
+	}).done(function(data) {
+		$.each(data, function(index, datum) {
+			var html = "<div class='bill'>";
+			html += "<div id='ground'></div>";
+			html += "<p class='fade'>" + datum['title'] + "</p>";
+			html += "<span class='fade'>" + datum['type'] + "</span>";
+			html += "<h2 class='appear' style='display: none;'>" + datum['description'] + "</h2>";
+			html += "</div>";
+	    	$('.content').append(html);
+	    });
+	});
+
+	$('.bill').on("mouseenter", function() {	
+		$(".fade", this).fadeOut(100);
+		$(".appear", this).fadeIn(100);
+	}).on("mouseleave", ".bill", function() {	
+		$(".fade", this).fadeIn(100);
+		$(".appear", this).fadeOut(100);
+	}).on("mouseenter mouseleave", ".bill", function() {
+		$("#ground", this).toggleClass("active");
+	}).ready(function(){
+		$(".appear").fadeOut(0);
+	}); 
+
+	$('.content').click(function(){
+		if($sideNav.position()["left"] >= 0 && $(window).width()<900){
+			$sideNav.animate({left: "-600px"});
+		}
+	});
+
 	$('#view-nav').click(function(){
 		if($('.page').width()<900) {
 			var position = $sideNav.position();
