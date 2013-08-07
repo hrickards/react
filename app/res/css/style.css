@@ -8,6 +8,7 @@ body {
 ul {
 	list-style: none;
 	display: inline;
+	padding: 0;
 }
 
 html {
@@ -79,6 +80,7 @@ html {
 	min-width: 300px;
 	margin: 0 auto;
 	box-shadow: 0 0 20px #888888;
+	cursor: default;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -108,7 +110,7 @@ html {
 }
 
 .pin {
-	margin-left: 5px;
+	margin-left: 20px;
 	width: 35px;
 	height: 35px;
 	vertical-align: middle;
@@ -131,18 +133,22 @@ html {
 }
 
 .categories li {
-	height: 50px;
+	height: 45px;
 	margin-left: 10px;
 }
 
-.category :hover{
-	color: blue;
+.category {
+	margin-top: 10px;
+}
+
+.category:hover {
+	padding-left: 10px;
 }
 
 .border {
 	width: 80%;
     height: 1px;
-    margin: 5px auto;
+    margin: 10px auto 0px auto;
     border-bottom: 1px solid #e8e8e8;	
 }
 
@@ -249,7 +255,7 @@ html {
 }
 
 #ground {
-	background: #ffffff url(./image.jpg) no-repeat top right;
+	background: #ffffff url(./image.jpg) no-repeat 50% 50%;
 	min-height:100%;
 	min-width:100%;
 	box-shadow:1px 1px 1px #777;

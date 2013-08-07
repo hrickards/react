@@ -34,7 +34,7 @@
 							<li class="title" id="new">New</li>
 							<li class="title" id="Popular">Popular</li>
 							<li class="title" id="pinned">Pinned Feed</li>
-							<li class="title" id="categories">Category's<div id="search"><img class="search-icon icon" src="./res/img/search.png" /><input id="filter-categories" type="text" name="filter" placeholder="Filter"></div></li>
+							<li class="title" id="categories">Categories<div id="search"><img class="search-icon icon" src="./res/img/search.png" /><input id="filter-categories" type="text" name="filter" placeholder="Filter"></div></li>
 							<?php
 								$cats = fopen("./res/categories.txt", "r");
 								$main = "";
@@ -64,7 +64,7 @@
 
 				<div class="content">
 					<img class="loading" src="./res/img/ajax-loader.gif"/>
-					<ul class="list-of-bills">
+					<ul class="bill-feed">
 					</ul>
 				</div>
 			</div>
