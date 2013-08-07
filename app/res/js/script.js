@@ -5,7 +5,6 @@ $('document').ready(function(){
 	var $sideNav = $('.nav-pane');
 	var $content = $('.content');
 
-	$('.page').css("height", $(window).height());
 	$('body').bind('orientationchange', adaptToOrientation);
 
 	resizeStuff();
@@ -26,6 +25,23 @@ $('document').ready(function(){
 		resizeStuff();
 	});
 
+	$('#filter-categories').bind('input propertychange', function(){
+		var val = ($('#filter-categories').val()).toLowerCase();
+		var textEx = new RegExp("\\b"+val, "i");
+		var masterEx = new RegExp("\\b"+val.replace("_", " "),"i");
+		$('.category').each(function(){
+			if(($(this).text().match(textEx) != null) || ($(this).attr('master').match(masterEx) != null) ){
+				$(this).show();
+			} else {
+				$(this).hide();
+			}
+		});
+	});
+
+	$('#search').click(function(){
+		$('#filter-categories').focus();
+	});
+
 	function resizeStuff(){
 		adaptToOrientation();
 		var windowWidth = $(window).width();
@@ -39,7 +55,10 @@ $('document').ready(function(){
 			console.log(width);
 			$content.css("width", width + "px");
 		}
-		$content.css("top", $('top-bar').height+"px");
+		$('.page').css("height", $(window).height() + "px");
+		$('.lower').css("height", $('.page').height()-$('.top-bar').height() + "px");
+		$content.css("height", $content.parent().height() + "px");
+		$content.css("top", $('.top-bar').height() + $('.top-bar').offset()['top'] + 1 +"px");
 		$content.css("right", (windowWidth-pageWidth)/2 + "px");
 	}
 
@@ -63,4 +82,6 @@ $('document').ready(function(){
 	        'width=' + content_width + ',' +
 	        'minimum-scale=' + viewport_scale + ', maximum-scale=' + viewport_scale);
 	}
+
+
 });
