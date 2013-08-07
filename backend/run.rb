@@ -19,17 +19,19 @@ LIMIT = 40
 case ARGV[0]
 when "server"
   class App < Sinatra::Base
-    helpers Sinatra::JSON
+    helpers Sinatra::Jsonp
 
     get '/bills.json' do
+      response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
       if params[:query]
-        json Bill.search(params[:query]).limit(LIMIT)
+        jsonp Bill.search(params[:query]).limit(LIMIT)
       else
-        json Bill.all.limit(LIMIT)
+        jsonp Bill.all.limit(LIMIT)
       end
     end
 
     set :bind, '0.0.0.0'
+    enable :cross_origin
     run!
   end
 when "scrape"

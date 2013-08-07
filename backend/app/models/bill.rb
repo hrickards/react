@@ -58,7 +58,7 @@ class Bill
     filename = "public/images/progress/#{self.id}.png"
     unless File.exist? filename
       Phantomjs.run script, self.url, filename, "--diskcache=true"
-      self.diagram = "/images/progress/#{self.id}"
+      self.diagram = "/images/progress/#{self.id}.png"
       self.save
     end
     puts "Done #{self.id}"
