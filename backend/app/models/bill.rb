@@ -13,6 +13,7 @@ class Bill
   field :bill, type: String
   field :url, type: String
   field :diagram, type: String
+  field :divisions, type: Array
   fulltext_search_in :description
 
   # Scrape each bill and basic bill information
@@ -39,9 +40,15 @@ class Bill
   # Scrape the votes for an individual bill
   def scrape_divisions
     stitle = slugify_title self.title
-    mp_division_ids = MP_VOTES[stitle]
-    lords_division_ids = LORDS_VOTES[stitle]
-    puts [mp_division_ids, lords_division_ids].inspect
+    mp_division_ids = MP_VOTES[stitle] || []
+    lords_division_ids = LORDS_VOTES[stitle] || []
+
+    mp_divisions = mp_division_ids.map { |id| DB['mp_votes'].find_one(BSON::ObjectId(id)) }.map { |div| parse_division div }
+    lords_divisions = lords_division_ids.map { |id| DB['lords_votes'].find_one(BSON::ObjectId(id)) }.map { |div| parse_division div }
+
+    self.divisions = {mps: mp_divisions, lords: lords_divisions}
+    self.save
+    puts "Saved divisions"
   end
 
   # Scrape diagram
