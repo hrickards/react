@@ -4,10 +4,11 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Open Parliament</title>
+		<title>You-ocracy</title>
 		
 		<meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./res/css/style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="./res/css/new.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./res/css/scroll-bars.css" />
 
 		<meta name="description" content=""/>
@@ -19,10 +20,9 @@
 		<div class="page">
 
 			<div class="top-bar">
+				<div id="view-nav"><img src="./res/img/more.png"/></div>
 				<div class="title-bar">
-					<div id="view-nav">&#9776</div>
-					<img class="loading" src="./res/img/ajax-loader.gif"/>
-					<h1>Open Parliament</h1>
+					<h1>You-ocracy</h1>
 				</div>
 			</div>
 
@@ -30,7 +30,7 @@
 				<div class="nav-pane">
 					<div class="nav-scroll">
 						<ul class="categories">
-							<li class="main" id="about">About</li>
+							<li class="title" id="about">About</li>
 							<li class="title" id="new">New</li>
 							<li class="title" id="Popular">Popular</li>
 							<li class="title" id="pinned">Pinned Feed</li>
@@ -63,9 +63,8 @@
 				</div>
 
 				<div class="content">
+					<img class="loading" src="./res/img/ajax-loader.gif"/>
 					<ul class="list-of-bills">
-						<li><div class="bill"><p>Pickled ugh fixie, Godard pariatur reprehenderit quinoa accusamus minim non pitchfork sunt. Beard sint nostrud leggings, pickled proident thundercats gastropub lomo next level est elit cliche sartorial laboris.</p></div></li>
-						<li><div class="bill"><p>Ethnic cillum wayfarers, ethical tofu shabby chic hoodie raw denim fashion axe officia. Vice messenger bag mollit, raw denim try-hard kitsch sapiente pug butcher whatever tote bag delectus in farm-to-table Banksy. Pop-up ethnic fingerstache Tonx tempor.</p></div></li>
 					</ul>
 				</div>
 			</div>
