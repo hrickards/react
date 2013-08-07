@@ -57,3 +57,37 @@ DIVISION_VALUES = {
 def parse_division_value(value)
   DIVISION_VALUES[value.to_s.lstrip]
 end
+
+def select_keys(record, keys)
+  new_record = {}
+    # TODO respond_to? not the best way as e.g. to_s would work
+  keys.each { |key| new_record[key] = record[key] if record.respond_to? key }
+  return new_record
+end
+
+# Copied from SO 1302022
+def generate_slug(title)
+  # TODO Despite the name, slugify_title removes brackets, etc from the title
+  # whereas generate_slug generates a machine-readable slug
+  title = slugify_title title
+  #strip the string
+  ret = title.downcase.strip
+
+  #blow away apostrophes
+  ret.gsub! /['`]/,""
+
+  # @ --> at, and & --> and
+  ret.gsub! /\s*@\s*/, " at "
+  ret.gsub! /\s*&\s*/, " and "
+
+  #replace all non alphanumeric, underscore or periods with underscore
+  ret.gsub! /\s*[^A-Za-z0-9\.\-]\s*/, '_'  
+
+  #convert double underscores to single
+  ret.gsub! /_+/,"_"
+
+  #strip off leading/trailing underscore
+  ret.gsub! /\A[_\.]+|[_\.]+\z/,""
+
+  ret
+end

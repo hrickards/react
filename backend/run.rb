@@ -1,4 +1,4 @@
-require_relative 'app'
+require_relative 'application'
 
 case ARGV[0]
 when "scrape"

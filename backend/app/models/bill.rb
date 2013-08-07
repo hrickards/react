@@ -14,6 +14,7 @@ class Bill
   field :url, type: String
   field :diagram, type: String
   field :divisions, type: Array
+  field :slug, type: String
   fulltext_search_in :description
 
   # Scrape each bill and basic bill information
@@ -90,22 +91,40 @@ class Bill
     end
 
     sponsors = sponsor_names.map { |n| Person.new strip_html(n) }
+    title = details.xpath("//h1").first.text
 
     data = {
-      title: details.xpath("//h1").first.text,
+      title: title,
       type: details.xpath("//dd")[0].text,
       sponsors: sponsors.map(&:name),
       photo: sponsors.empty? ? '' : sponsors.first.photo_wrapper,
       description: strip_html(doc.xpath("//div[@id='bill-summary']").children.select(&:text?).last.text),
       bill: doc.xpath("//td[@class='bill-item-description']/span[@class='application-pdf']/a/@href").text,
-      url: url
+      url: url,
+      slug: generate_slug(title)
     }
 
     self.create data
   end
 
   # Uses mongo full text searching to find articles relevant to keywords
-  def self.search(query, limit)
-    self.fulltext_search(query, {:max_results=>limit})
+  def self.search(query, limit, keys=nil)
+    keys = %w{title description slug} unless keys
+    if query
+      self.fulltext_search(query, {:max_results=>limit}).map { |r| select_keys r, keys }
+    else
+      self.all.limit limit
+    end
+  end
+
+  # Find a bill with the given slug
+  def self.find_by_slug(slug)
+    self.find_by slug: slug
+  end
+
+  # Vote on a bill
+  # TODO Implement this
+  def vote(vote)
+    return {status: 'Successful'}
   end
 end
