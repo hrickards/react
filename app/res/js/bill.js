@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$.ajax({
-    url: 'http://harryrickards.com:4567/bills.json',
+    url: 'http://harryrickards.com/api/bills.json',
     dataType: 'jsonp'
 	}).done(function(data) {
     $.each(data, function(index, datum) {

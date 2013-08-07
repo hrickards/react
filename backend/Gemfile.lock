@@ -17,6 +17,7 @@ GEM
     i18n (0.6.4)
     json (1.8.0)
     json_pure (1.8.0)
+    kgio (2.8.0)
     method_source (0.8.1)
     mini_memory_store (0.1.0)
     mini_portile (0.5.1)
@@ -44,6 +45,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
+    raindrops (0.11.0)
     redis (3.0.4)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
@@ -62,6 +64,10 @@ GEM
       paginator
     tzinfo (0.3.37)
     unicode_utils (1.0.0)
+    unicorn (4.6.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -81,3 +87,4 @@ DEPENDENCIES
   sinatra-cross_origin
   sinatra-jsonp
   twfy
+  unicorn
