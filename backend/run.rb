@@ -14,6 +14,8 @@ require_relative 'app/helpers'
 require_relative 'app/models/bill'
 require_relative 'app/models/person'
 
+LIMIT = 40
+
 case ARGV[0]
 when "server"
   class App < Sinatra::Base
@@ -21,12 +23,13 @@ when "server"
 
     get '/bills.json' do
       if params[:query]
-        json Bill.search params[:query]
+        json Bill.search(params[:query]).limit(LIMIT)
       else
-        json Bill.all
+        json Bill.all.limit(LIMIT)
       end
     end
 
+    set :bind, '0.0.0.0'
     run!
   end
 when "scrape"
