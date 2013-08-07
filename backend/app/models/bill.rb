@@ -105,7 +105,7 @@ class Bill
   end
 
   # Uses mongo full text searching to find articles relevant to keywords
-  def self.search(query)
-    self.fulltext_search query
+  def self.search(query, limit)
+    self.fulltext_search(query, {:max_results=>limit})
   end
 end

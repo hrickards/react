@@ -23,7 +23,7 @@ helpers Sinatra::Jsonp
 get '/bills.json' do
 response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
 	if params[:query]
-jsonp Bill.search(params[:query]).limit(LIMIT)
+jsonp Bill.search(params[:query], LIMIT)
 	else
 jsonp Bill.all.limit(LIMIT)
 	end
