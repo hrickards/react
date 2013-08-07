@@ -41,7 +41,7 @@ body {
 }
 
 .content {
-	width: @wid;
+	width: @wid!important;
 	max-width: 960px;
 	border: 1px black solid;
 	margin: 0 auto;
@@ -50,8 +50,13 @@ body {
 	min-width: 300px;
     overflow-y:scroll;
     overflow-x:hidden;
+    
 }
-
+ ::-webkit-scrollbar{width:9px;height:9px;}
+ ::-webkit-scrollbar-button:start:decrement,#doc ::-webkit-scrollbar-button:end:increment{display:block;height:0;background-color:transparent;}
+ ::-webkit-scrollbar-track-piece{background-color:#FAFAFA;-webkit-border-radius:0;-webkit-border-bottom-right-radius:8px;-webkit-border-bottom-left-radius:8px;}
+ ::-webkit-scrollbar-thumb:vertical{height:50px;background-color:#999;-webkit-border-radius:8px;}
+ ::-webkit-scrollbar-thumb:horizontal{width:50px;background-color:#999;-webkit-border-radius:8px;}
 .loading{
 	float: right;
 	margin: 24px;
