@@ -1,0 +1,6 @@
+development:
+  sessions:
+    default:
+      database: parliament
+      hosts:
+        - localhost:27017
