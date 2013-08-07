@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Open Parliament</title>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<meta name="viewport" content="width=device-width" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./res/css/new.css" />
+		<meta name="description" content=""/>
+		<meta name="keywords" content="">
+		<script src="./res/js/bill.js"></script>
+	<style>
+		div.active{opacity:0.4; color:black;}
+	</style>
+	</head>
+
+	<body>
+		<div class="top-bar">
+			<div class="title-bar">
+				<div id="view-nav">&#9776</div>
+				<img class="loading" src="./resources/img/ajax-loader.gif"/>
+				<h1>Open Parliament</h1>
+			</div>
+		</div>
+		<div class="content" id="doc">
+			<div class="bill" id="doc">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+			<div class="bill">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+			<div class="bill">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+			<div class="bill">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+			<div class="bill">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+			<div class="bill">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+			<div class="bill">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+			<div class="bill">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+			<div class="bill">
+				<div id="ground"></div>
+				<p class="fade"> (text to appear at the top right of the image)</p>
+				<span class="fade"> The drug category </span>
+				<h2 class="appear"> This is some very interesting text that will describe the bill and will be a nice summary of it and I am already bored of typing it in but my internet would not work, so I can't use lorem ipsum :@ </h2>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function(){$(".appear").fadeOut(0);}); 
+			$(".bill").hover(function(){$(".appear", this).fadeToggle(0); $(".fade",this).fadeToggle(0);});
+			$(".bill").hover(function(){$("#ground", this).toggleClass("active");});
+ 		</script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script type="text/javascript" src="./res/js/script.js"></script>
+	</body>
+</html>
+
