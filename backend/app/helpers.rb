@@ -65,7 +65,7 @@ end
 def select_keys(record, keys)
   new_record = {}
   keys.each do |key|
-    if %w{score humanized_slug large_photo}.include? key
+    if %w{score humanized_slug large_photo date}.include? key
       new_record[key] = record.send(key)
     elsif record.respond_to? key
       new_record[key] = record[key]
@@ -107,4 +107,16 @@ def bill_or_act(title)
   else
     :bill
   end
+end
+
+def gen_date(documents, events)
+  today = Date.today
+  dates = (documents + events).map { |doc|
+    begin
+      Date.parse doc.last
+    rescue
+      nil
+    end
+  }.reject { |date| date.nil? }.select { |date| date <= today }.reverse
+  dates.last
 end

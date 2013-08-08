@@ -20,6 +20,7 @@ class Bill
   field :events, type: Array
   field :documents, type: Array
   field :next_event, type: String
+  field :date, type: Date
   fulltext_search_in :description
 
   # Scrape each bill and basic bill information
@@ -110,6 +111,9 @@ class Bill
     sponsors = sponsor_names.map { |n| Person.new strip_html(n) }
     title = details.xpath("//h1").first.text
 
+    documents = self.scrape_documents(path)
+    events =  self.scrape_events(path)
+
     data = {
       title: title,
       type: details.xpath("//dd")[0].text,
@@ -122,9 +126,10 @@ class Bill
       upvotes: 0,
       downvotes: 0,
       leg_type: bill_or_act(title),
-      events: self.scrape_events(path),
-      documents: self.scrape_documents(path),
-      next_event: strip_html(doc.xpath("//div[@class='next-event']/ul/li").children.select(&:text?).join)
+      events: events,
+      documents: documents,
+      next_event: strip_html(doc.xpath("//div[@class='next-event']/ul/li").children.select(&:text?).join),
+      date: gen_date(documents, events)
     }
 
     puts "Inserting"
@@ -135,9 +140,9 @@ class Bill
   def self.search(query, limit, keys=nil)
     keys = %w{title description slug humanized_slug large_photo} unless keys
     if query
-      self.fulltext_search(query, {:max_results=>limit}).map { |r| select_keys r, keys }
+      self.fulltext_search(query, {:max_results=>limit}).sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }
     else
-      self.all.limit(limit).map { |r| select_keys r, keys }
+      self.desc(:date).limit(limit).map { |r| select_keys r, keys }
     end
   end
 
