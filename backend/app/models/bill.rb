@@ -7,6 +7,7 @@ class Bill
   include Mongoid::FullTextSearch
   field :title, type: String
   field :type, type: String
+  field :leg_type, type: String
   field :sponsors, type: Array
   field :photo, type: Array
   field :description, type: String
@@ -120,7 +121,7 @@ class Bill
       slug: generate_slug(title),
       upvotes: 0,
       downvotes: 0,
-      type: bill_or_act(title),
+      leg_type: bill_or_act(title),
       events: self.scrape_events(path),
       documents: self.scrape_documents(path),
       next_event: strip_html(doc.xpath("//div[@class='next-event']/ul/li").children.select(&:text?).join)
