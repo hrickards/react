@@ -9,7 +9,7 @@ echo "Scraping"
 ruby run.rb scrape
 echo "Divisions"
 ruby run.rb divisions
-echo "Diagrams
+echo "Diagrams"
 ruby run.rb diagrams
 echo "Reindex"
 ruby run.rb reindex
