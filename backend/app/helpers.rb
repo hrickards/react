@@ -101,3 +101,11 @@ def generate_slug(title)
 
   ret
 end
+
+def bill_or_act(title)
+  if title.include? "Act"
+    :act
+  else
+    :bill
+  end
+end

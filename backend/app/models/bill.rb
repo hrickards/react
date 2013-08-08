@@ -10,13 +10,14 @@ class Bill
   field :sponsors, type: Array
   field :photo, type: Array
   field :description, type: String
-  field :bill, type: String
   field :url, type: String
   field :diagram, type: String
   field :divisions, type: Array
   field :slug, type: String
   field :upvotes, type: Integer
   field :downvotes, type: Integer
+  field :events, type: Array
+  field :documents, type: Array
   fulltext_search_in :description
 
   # Scrape each bill and basic bill information
@@ -26,7 +27,7 @@ class Bill
       doc = Nokogiri::HTML cache_open(BASE_URL + '/bills' + postfix)
       # List of relative urls to a bill on the parliament site
       bills = doc.xpath "//td[@class='bill-item-description']/a/@href"
-      bills.each { |path| Bill.scrape path }
+      bills.each { |path| self.scrape path.value }
     end
   end
 
@@ -113,13 +114,17 @@ class Bill
       sponsors: sponsors.map(&:name),
       photo: sponsors.empty? ? '' : sponsors.first.photo_wrapper,
       description: strip_html(doc.xpath("//div[@id='bill-summary']").children.select(&:text?).last.text),
-      bill: doc.xpath("//td[@class='bill-item-description']/span[@class='application-pdf']/a/@href").text,
+      # bill: doc.xpath("//td[@class='bill-item-description']/span[@class='application-pdf']/a/@href").text,
       url: url,
       slug: generate_slug(title),
       upvotes: 0,
-      downvotes: 0
+      downvotes: 0,
+      type: bill_or_act(title),
+      events: self.scrape_events(path),
+      documents: self.scrape_documents(path)
     }
 
+    puts "Inserting"
     self.create data
   end
 
@@ -170,5 +175,20 @@ class Bill
   # TODO Is this the best way to calculate this score?
   def score
     self.upvotes - self.downvotes
+  end
+
+  def self.scrape_events(path)
+    url = "#{BASE_URL}#{path[0...-5]}/stages.html"
+    doc = Nokogiri::HTML cache_open(url)
+    doc.xpath("//div[@id='bill-summary']//tbody/tr").map { |row| [strip_html(row.xpath("td[@class='bill-item-description']").text), strip_html(row.children[-2].text)] }
+  end
+
+  def self.scrape_documents(path)
+    url = "#{BASE_URL}#{path[0...-5]}/documents.html"
+    doc = Nokogiri::HTML cache_open(url)
+    doc.xpath("//tbody/tr").map do |row|
+      link = row.xpath("td[@class='bill-item-description']/a[1]")
+      [link.text, link.attr('href').value, row.xpath("td[@class='bill-item-date']").text]
+    end
   end
 end
