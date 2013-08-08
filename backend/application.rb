@@ -57,6 +57,6 @@ module OpenParliament
       end
     end
 
-    add_swagger_documentation base_path: 'http://localhost:9292/api'
+    add_swagger_documentation base_path: 'http://harryrickards.com/api'
   end
 end
