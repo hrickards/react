@@ -193,4 +193,19 @@ class Bill
       [link.text, link.attr('href').value, row.xpath("td[@class='bill-item-date']").text]
     end
   end
+
+  def large_photo
+    Cachy.cache("image_large" + self.title, hash_key: true) { self.large_photo_real }
+  end
+
+  def large_photo_real
+    query = URI.escape self.humanized_slug
+    url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?Query=%27#{query}%27&$top=50&$format=json&ImageFilters=%27Size%3AWidth%3A775%27"
+    response = HTTParty.get url, :basic_auth => {:username => '', :password => API_KEY}, :format => :json
+    begin
+      return response.first.last["results"].first["MediaUrl"]
+    rescue
+      return ""
+    end
+  end
 end

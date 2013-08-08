@@ -3,12 +3,14 @@ Bundler.require
 require 'open-uri'
 require 'pp'
 require 'fileutils'
+require 'json'
 
 include Mongo
 
 Cachy.cache_store = Redis.new
 Mongoid.load! "config/mongoid.yml", :development
 DB = MongoClient.new['parliament']
+API_KEY = 'oeOq1vsorc6YV1b7dbvf+lPQyBeMWFmJFbywI2kJERc'
 
 require_relative 'app/helpers'
 require_relative 'app/models/bill'
