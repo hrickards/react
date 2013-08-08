@@ -6,6 +6,7 @@ set :migrate_target, :current
 set :ssh_options,     { :forward_agent => true }
 set :deploy_to,       "/home/harry/open_parliament"
 set :current_path, "/home/harry/open_parliament"
+set :normalize_asset_timestamps, false
 
 set :user, "harry"
 set :group, "harry"
