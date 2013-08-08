@@ -21,7 +21,8 @@ class Bill
   field :documents, type: Array
   field :next_event, type: String
   field :date, type: Date
-  fulltext_search_in :description
+  fulltext_search_in :description, :index_name => 'description_index'
+  fulltext_search_in :title, :index_name => 'title_index'
 
   # Scrape each bill and basic bill information
   def self.scrape_all
@@ -137,12 +138,19 @@ class Bill
   end
 
   # Uses mongo full text searching to find articles relevant to keywords
-  def self.search(query, limit, keys=nil)
-    keys = %w{title description slug humanized_slug large_photo} unless keys
-    if query
-      self.fulltext_search(query, {:max_results=>limit}).sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }
+  def self.search(queries, limit, offset, keys=nil)
+    keys = %w{title description slug humanized_slug large_photo type} unless keys
+    unless queries.nil? or queries.empty?
+      pseudo_limit = offset + limit
+      queries.map { |query|
+        (
+          self.fulltext_search(query, :index => 'title_index', :max_results=> limit, :return_scores => true) + 
+          self.fulltext_search(query, :index => 'description_index', :max_results=> limit, :return_scores => true)
+        # ).select { |r, s| s > 0.5 }.map(&:first)
+        )
+      }.flatten(1).sort_by { |r, s| r }.reverse.map(&:first)[offset..pseudo_limit].sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }
     else
-      self.desc(:date).limit(limit).map { |r| select_keys r, keys }
+      self.desc(:date).skip(offset).limit(limit).map { |r| select_keys r, keys }
     end
   end
 
@@ -201,15 +209,22 @@ class Bill
   end
 
   def large_photo
-    Cachy.cache("image_large" + self.title, hash_key: true) { self.large_photo_real }
+    Cachy.cache("image_llarge" + self.title, hash_key: true) { self.large_photo_real }
   end
 
   def large_photo_real
+    sleep 0.05
     query = URI.escape self.humanized_slug
-    url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?Query=%27#{query}%27&$top=50&$format=json&ImageFilters=%27Size%3AWidth%3A775%27"
+    url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?Query=%27#{query}%27&$top=50&$format=json&ImageFilters=%27Size%3ALarge%27"
     response = HTTParty.get url, :basic_auth => {:username => '', :password => API_KEY}, :format => :json
     begin
-      return response.first.last["results"].first["MediaUrl"]
+      images = response.first.last["results"].map { |res| [res["Width"], res["MediaUrl"]] }
+      image = images.select { |image| image.first.to_i >= 770 }.first
+      if image
+        return image.last
+      else
+        return images.sort_by { |image| image.first.to_i }.last.last
+      end
     rescue
       return ""
     end

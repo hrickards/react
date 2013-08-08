@@ -14,7 +14,7 @@ def slugify_title(title)
 end
 
 def alternate_slugify_title(title)
-  title.split(/Bill|Act/, 2)[0].gsub(/\([a-zA-Z.\s\d'",]*\)/, '').rstrip
+  title.split(/Bill|Act/, 2)[0].gsub(/\([a-zA-Z.\s\d'",-]*\)/, '').rstrip
 end
 
 def get_votes_wrapper(collection)
