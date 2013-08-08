@@ -37,6 +37,9 @@ GEM
       kramdown
     hashie (2.0.5)
     highline (1.6.19)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.6.4)
     json (1.8.0)
     kgio (2.8.0)
@@ -107,6 +110,7 @@ DEPENDENCIES
   capistrano
   grape
   grape-swagger
+  httparty
   mongo
   mongoid
   mongoid_fulltext
