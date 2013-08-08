@@ -138,7 +138,7 @@ class Bill
 
   # Uses mongo full text searching to find articles relevant to keywords
   def self.search(query, limit, keys=nil)
-    keys = %w{title description slug humanized_slug large_photo} unless keys
+    keys = %w{title description slug humanized_slug large_photo type} unless keys
     if query
       self.fulltext_search(query, {:max_results=>limit}).sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }
     else
@@ -201,7 +201,13 @@ class Bill
   end
 
   def large_photo
-    Cachy.cache("image_large" + self.title, hash_key: true) { self.large_photo_real }
+    res = Cachy.cache("image_large" + self.title) { self.large_photo_real }
+    if res.empty? or not res.is_a? String or res.include? "datamarket.azure.com"
+      Cachy.increment_key "image_large" + self.title
+      self.large_photo_real
+    else
+      res
+    end
   end
 
   def large_photo_real
@@ -210,8 +216,11 @@ class Bill
     response = HTTParty.get url, :basic_auth => {:username => '', :password => API_KEY}, :format => :json
     begin
       return response.first.last["results"].first["MediaUrl"]
-    rescue
-      return ""
+    rescue => e
+      query = URI.escape self.humanized_slug.split.first
+      url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?Query=%27#{query}%27&$top=50&$format=json&ImageFilters=%27Size%3AWidth%3A775%27"
+      response = HTTParty.get url, :basic_auth => {:username => '', :password => API_KEY}, :format => :json,  :headers => {"User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17"}
+      return response.first.last["results"].first["MediaUrl"]
     end
   end
 end
