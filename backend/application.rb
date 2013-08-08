@@ -34,7 +34,7 @@ module OpenParliament
     resources :bills do
       desc "Return a list of all bills"
       params do
-        optional :query, type: String, desc: "A category to search for."
+        optional :query, type: Array, desc: "An array of categories to search for."
         optional :limit, type: Integer, desc: "Maximum number of results to return."
         optional :offset, type: Integer, desc: "Number of results to offset by."
         optional :fields, type: Array, desc: "A list of fields to return data for."

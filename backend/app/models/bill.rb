@@ -21,7 +21,8 @@ class Bill
   field :documents, type: Array
   field :next_event, type: String
   field :date, type: Date
-  fulltext_search_in :description
+  fulltext_search_in :description, :index_name => 'description_index'
+  fulltext_search_in :title, :index_name => 'title_index'
 
   # Scrape each bill and basic bill information
   def self.scrape_all
@@ -137,11 +138,16 @@ class Bill
   end
 
   # Uses mongo full text searching to find articles relevant to keywords
-  def self.search(query, limit, offset, keys=nil)
+  def self.search(queries, limit, offset, keys=nil)
     keys = %w{title description slug humanized_slug large_photo type} unless keys
-    if query
+    unless queries.nil? or queries.empty?
       pseudo_limit = offset + limit
-      self.fulltext_search(query, {:max_results=>pseudo_limit}).sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }[offset..pseudo_limit]
+      queries.map { |query|
+        (
+          self.fulltext_search(query, :index => 'title_index', :max_results=> limit, :return_scores => true) + 
+          self.fulltext_search(query, :index => 'description_index', :max_results=> limit, :return_scores => true)
+        ).select { |r, s| s > 0.5 }.map(&:first)
+      }.flatten(1).sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }[offset..pseudo_limit]
     else
       self.desc(:date).skip(offset).limit(limit).map { |r| select_keys r, keys }
     end
