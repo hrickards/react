@@ -171,4 +171,19 @@ class Bill
   def score
     self.upvotes - self.downvotes
   end
+
+  def large_photo
+    Cachy.cache("image2" + self.title, hash_key: true) { self.large_photo_real }
+  end
+
+  def large_photo_real
+    query = URI.escape self.humanized_slug
+    url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?Query=%27#{query}%27&$top=50&$format=json"
+    response = HTTParty.get url, :basic_auth => {:username => '', :password => API_KEY}, :format => :json
+    begin
+      return response.first.last["results"].first["MediaUrl"]
+    rescue
+      return ""
+    end
+  end
 end

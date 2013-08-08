@@ -64,9 +64,8 @@ end
 
 def select_keys(record, keys)
   new_record = {}
-    # TODO respond_to? not the best way as e.g. to_s would work
   keys.each do |key|
-    if %w{score humanized_slug}.include? key
+    if %w{score humanized_slug large_photo}.include? key
       new_record[key] = record.send(key)
     elsif record.respond_to? key
       new_record[key] = record[key]
