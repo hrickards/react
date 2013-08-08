@@ -23,6 +23,25 @@ $('document').ready(function(){
 		$(".appear").fadeOut(0);
 	}); 
 
+	$('.pin').click(function(e){
+		e.stopImmediatePropagation();
+		var $cat = $(this).parent();
+			if($cat.attr("added") != "true"){
+				$pinned = $cat.clone();
+				$cat.attr("added", "true");
+				$pinned.children('.pin').attr("src", "./res/img/remove.png").addClass("remove").removeClass("pin").removeAttr("style");
+				$pinned.addClass("pinned").insertAfter($('#pinned'));
+			}
+	});
+
+	$('.remove').live("click", function(e){
+		e.stopImmediatePropagation();
+		var id = $(this).parent('.category').attr("id");
+		$(this).parent().remove();
+		id = id.replace("\t","")
+		$('#'+id).removeAttr("added");
+	});
+
 	$('.content').click(function(){
 		if($sideNav.position()["left"] >= 0 && $(window).width()<900){
 			$sideNav.animate({left: "-600px"});
@@ -49,7 +68,7 @@ $('document').ready(function(){
 		var val = ($('#filter-categories').val()).toLowerCase();
 		var textEx = new RegExp("\\b"+val, "i");
 		var masterEx = new RegExp("\\b"+val.replace("_", " "),"i");
-		$('.category').each(function(){
+		$('.category').not('.pinned').each(function(){
 			if(($(this).text().match(textEx) != null) || ($(this).attr('master').match(masterEx) != null) ){
 				$(this).show();
 			} else {
@@ -66,11 +85,7 @@ $('document').ready(function(){
 		$('#filter-categories').focus();
 	});
 
-	$('.category').mouseenter(function(){
-		$(this).children('.pin').css("margin-left", "-=10px");
-	}).mouseleave(function(){
-		$(this).children('.pin').css("margin-left", "+=10px");
-	}).click(function(){
+	$('.category').live("click", function(){
 		setFeed($(this).text());
 	});
 
@@ -82,7 +97,7 @@ $('document').ready(function(){
 			//$sideNav.css("left","-600px");
 			$content.css("width", pageWidth + "px");
 		} else {
-			//$sideNav.css("left","0px");
+			$sideNav.css("left","0px");
 			var width = pageWidth - $sideNav.width();
 			console.log(width);
 			$content.css("width", width + "px");
@@ -116,31 +131,44 @@ $('document').ready(function(){
 	}
 
 	function setFeed(category){
+		console.log("setting feed to " + category);
 		$('.bill-feed').empty();
-		$('.loading').css('visiblilty', 'visible');
+		$('#loading-big').css('visibility', 'visible');
 		var query;
 		if(category != "") {
 			query = "query="+category;
 		} else {
 			query = "";
 		}
-		var url = 'http://harryrickards.com/api/bills.json?' + query + "&length=15";
+		var url = 'http://harryrickards.com/api/bills.json?' + query + "&limit=15";
 		console.log(url);
+		//get bill info
 		$.ajax({
     		url: url,
     		dataType: 'jsonp'
-		}).done(function(data) {
+		}).success(function(data) {
 			$.each(data, function(index, datum) {
 				var html = "<div class='bill'>";
-				html += "<div id='ground'></div>";
-				html += "<p class='fade'>" + datum['title'] + "</p>";
-				html += "<span class='fade'>" + datum['type'] + "</span>";
+				html += "<div class='ground'></div>";
+				html += "<h2 class='fade'><span>" + datum['title'] + "</span></h2>";
+				console.log(datum['type']);
+				html += "<span class='fade type'>" + datum['type'] + "</span>";
 				html += "<h2 class='appear' style='display: none;'>" + datum['description'] + "</h2>";
 				html += "</div>";
-				$('.loading').css('visiblilty', 'hidden');
 		    	$('.bill-feed').append(html);
+		    	$('.bill-feed .ground').last().css("background-image", "url('" + datum['large_photo'] + "')");
+		    	$('#loading-big').css('visibility', 'hidden');
 	   		});
+		}).fail(function(){
+			console.log("fail");
+			$('#loading-big').css('visibility', 'hidden');
 		});
 	}
 
+	function extendFeed(){
+		$('#loading-small').css('visibility', 'visible');
+		$.ajax({
+
+		});
+	}
 });
