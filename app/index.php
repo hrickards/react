@@ -4,11 +4,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>You-ocracy</title>
+		<title>re: Act</title>
 		
 		<meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./res/css/style.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="./res/css/new.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./res/css/scroll-bars.css" />
 
 		<meta name="description" content=""/>
@@ -22,7 +21,7 @@
 			<div class="top-bar">
 				<div id="view-nav"><img src="./res/img/more.png"/></div>
 				<div class="title-bar">
-					<h1>You-ocracy</h1>
+					<h1>re: Act</h1>
 				</div>
 			</div>
 
@@ -34,7 +33,7 @@
 							<li class="title" id="new">New</li>
 							<li class="title" id="Popular">Popular</li>
 							<li class="title" id="pinned">Pinned Feed</li>
-							<li class="title" id="categories">Categories<div id="search"><img class="search-icon icon" src="./res/img/search.png" /><input id="filter-categories" type="text" name="filter" placeholder="Filter"></div></li>
+							<li class="title" id="categories">Categories<div id="search"><img class="search-icon icon" src="./res/img/search.png" /><input id="filter-categories" type="text" name="filter" placeholder=" Filter"></div></li>
 							<?php
 								$cats = fopen("./res/categories.txt", "r");
 								$main = "";
@@ -63,9 +62,11 @@
 				</div>
 
 				<div class="content">
-					<img class="loading" src="./res/img/ajax-loader.gif"/>
+					<img class="loading" id="loading-big" src="./res/img/ajax-loader.gif"/>
 					<ul class="bill-feed">
 					</ul>
+					<div class="load-more"><p>Load More</p><img class="loading" id="loading-small" src="./res/img/ajax-loader.gif"/>
+</div>
 				</div>
 			</div>
 
