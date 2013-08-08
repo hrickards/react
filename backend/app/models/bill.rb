@@ -146,8 +146,9 @@ class Bill
         (
           self.fulltext_search(query, :index => 'title_index', :max_results=> limit, :return_scores => true) + 
           self.fulltext_search(query, :index => 'description_index', :max_results=> limit, :return_scores => true)
-        ).select { |r, s| s > 0.5 }.map(&:first)
-      }.flatten(1).sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }[offset..pseudo_limit]
+        # ).select { |r, s| s > 0.5 }.map(&:first)
+        )
+      }.flatten(1).sort_by { |r, s| r }.reverse.map(&:first)[offset..pseudo_limit].sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }
     else
       self.desc(:date).skip(offset).limit(limit).map { |r| select_keys r, keys }
     end
