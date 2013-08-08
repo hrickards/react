@@ -125,7 +125,7 @@ class Bill
 
   # Uses mongo full text searching to find articles relevant to keywords
   def self.search(query, limit, keys=nil)
-    keys = %w{title description slug humanized_slug} unless keys
+    keys = %w{title description slug humanized_slug large_photo} unless keys
     if query
       self.fulltext_search(query, {:max_results=>limit}).map { |r| select_keys r, keys }
     else
