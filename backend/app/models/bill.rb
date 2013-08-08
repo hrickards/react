@@ -15,6 +15,8 @@ class Bill
   field :diagram, type: String
   field :divisions, type: Array
   field :slug, type: String
+  field :upvotes, type: Integer
+  field :downvotes, type: Integer
   fulltext_search_in :description
 
   # Scrape each bill and basic bill information
@@ -26,6 +28,18 @@ class Bill
       bills = doc.xpath "//td[@class='bill-item-description']/a/@href"
       bills.each { |path| Bill.scrape path }
     end
+  end
+
+  # Reset votes for all bills
+  def self.reset_votes
+    self.all.each { |bill| bill.reset_votes }
+  end
+
+  # Reset votes for a single bill
+  def reset_votes
+    self.upvotes = 0
+    self.downvotes = 0
+    self.save
   end
 
   # Scrape the votes (divisions) for each bill
@@ -101,7 +115,9 @@ class Bill
       description: strip_html(doc.xpath("//div[@id='bill-summary']").children.select(&:text?).last.text),
       bill: doc.xpath("//td[@class='bill-item-description']/span[@class='application-pdf']/a/@href").text,
       url: url,
-      slug: generate_slug(title)
+      slug: generate_slug(title),
+      upvotes: 0,
+      downvotes: 0
     }
 
     self.create data
@@ -109,12 +125,16 @@ class Bill
 
   # Uses mongo full text searching to find articles relevant to keywords
   def self.search(query, limit, keys=nil)
-    keys = %w{title description slug} unless keys
+    keys = %w{title description slug humanized_slug} unless keys
     if query
       self.fulltext_search(query, {:max_results=>limit}).map { |r| select_keys r, keys }
     else
-      self.all.limit limit
+      self.all.limit(limit).map { |r| select_keys r, keys }
     end
+  end
+
+  def humanized_slug
+    alternate_slugify_title self.title
   end
 
   # Find a bill with the given slug
@@ -122,9 +142,33 @@ class Bill
     self.find_by slug: slug
   end
 
+  # Positively vote on a bill
+  def upvote
+    self.upvotes += 1
+    self.save
+  end
+
+  # Negatively vote on a bill
+  def upvote
+    self.downvotes += 1
+    self.save
+  end
+
   # Vote on a bill
   # TODO Implement this
   def vote(vote)
-    return {status: 'Successful'}
+    case vote
+    when 1
+      self.upvote
+    when -1
+      self.downvote
+    end
+    return {status: 'Successful', new_score: self.score}
+  end
+
+  # Return the score for a bill
+  # TODO Is this the best way to calculate this score?
+  def score
+    self.upvotes - self.downvotes
   end
 end

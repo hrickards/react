@@ -10,7 +10,11 @@ def cache_open(url)
 end
 
 def slugify_title(title)
-  title.split(/Bill|Act|-/, 2)[0].rstrip.gsub(/\([a-zA-Z\s'",]*\)/, '')
+  title.split(/Bill|Act|-/, 2)[0].rstrip.gsub(/\([a-zA-Z.\d\s'",]*\)/, '')
+end
+
+def alternate_slugify_title(title)
+  title.split(/Bill|Act/, 2)[0].gsub(/\([a-zA-Z.\s\d'",]*\)/, '').rstrip
 end
 
 def get_votes_wrapper(collection)
@@ -61,7 +65,13 @@ end
 def select_keys(record, keys)
   new_record = {}
     # TODO respond_to? not the best way as e.g. to_s would work
-  keys.each { |key| new_record[key] = record[key] if record.respond_to? key }
+  keys.each do |key|
+    if %w{score humanized_slug}.include? key
+      new_record[key] = record.send(key)
+    elsif record.respond_to? key
+      new_record[key] = record[key]
+    end
+  end
   return new_record
 end
 
