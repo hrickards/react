@@ -137,12 +137,13 @@ class Bill
   end
 
   # Uses mongo full text searching to find articles relevant to keywords
-  def self.search(query, limit, keys=nil)
+  def self.search(query, limit, offset, keys=nil)
     keys = %w{title description slug humanized_slug large_photo} unless keys
     if query
-      self.fulltext_search(query, {:max_results=>limit}).sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }
+      pseudo_limit = offset + limit
+      self.fulltext_search(query, {:max_results=>pseudo_limit}).sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }[offset..pseudo_limit]
     else
-      self.desc(:date).limit(limit).map { |r| select_keys r, keys }
+      self.desc(:date).skip(offset).limit(limit).map { |r| select_keys r, keys }
     end
   end
 
