@@ -15,6 +15,6 @@ when "reset_votes"
   Bill.reset_votes
 when "console"
   binding.pry
-when "marriage"
-  Bill.scrape "/bills/2013-14/marriagesamesexcouplesbill.html"
+when "example"
+  Bill.scrape "/bills/2013-14/antisocialbehaviourcrimeandpolicingbill.html"
 end

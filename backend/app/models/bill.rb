@@ -18,6 +18,7 @@ class Bill
   field :downvotes, type: Integer
   field :events, type: Array
   field :documents, type: Array
+  field :next_event, type: String
   fulltext_search_in :description
 
   # Scrape each bill and basic bill information
@@ -121,7 +122,8 @@ class Bill
       downvotes: 0,
       type: bill_or_act(title),
       events: self.scrape_events(path),
-      documents: self.scrape_documents(path)
+      documents: self.scrape_documents(path),
+      next_event: strip_html(doc.xpath("//div[@class='next-event']/ul/li").children.select(&:text?).join)
     }
 
     puts "Inserting"
