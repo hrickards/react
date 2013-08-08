@@ -8,21 +8,8 @@ $('document').ready(function(){
 	$('body').bind('orientationchange', adaptToOrientation);
 
 	resizeStuff();
-
-	$.ajax({
-    	url: 'http://harryrickards.com/api/bills.json',
-    	dataType: 'jsonp'
-	}).done(function(data) {
-		$.each(data, function(index, datum) {
-			var html = "<div class='bill'>";
-			html += "<div id='ground'></div>";
-			html += "<p class='fade'>" + datum['title'] + "</p>";
-			html += "<span class='fade'>" + datum['type'] + "</span>";
-			html += "<h2 class='appear' style='display: none;'>" + datum['description'] + "</h2>";
-			html += "</div>";
-	    	$('.content').append(html);
-	    });
-	});
+	setFeed("");
+	
 
 	$('.bill').on("mouseenter", function() {	
 		$(".fade", this).fadeOut(100);
@@ -69,10 +56,22 @@ $('document').ready(function(){
 				$(this).hide();
 			}
 		});
+	}).keypress(function(e){
+		if(e.keyCode == 13){
+			$(this).blur();
+		}
 	});
 
 	$('#search').click(function(){
 		$('#filter-categories').focus();
+	});
+
+	$('.category').mouseenter(function(){
+		$(this).children('.pin').css("margin-left", "-=10px");
+	}).mouseleave(function(){
+		$(this).children('.pin').css("margin-left", "+=10px");
+	}).click(function(){
+		setFeed($(this).text());
 	});
 
 	function resizeStuff(){
@@ -80,10 +79,10 @@ $('document').ready(function(){
 		var windowWidth = $(window).width();
 		var pageWidth = $('.page').width();
 		if(windowWidth<900){
-			$sideNav.css("left","-600px");
+			//$sideNav.css("left","-600px");
 			$content.css("width", pageWidth + "px");
 		} else {
-			$sideNav.css("left","0px");
+			//$sideNav.css("left","0px");
 			var width = pageWidth - $sideNav.width();
 			console.log(width);
 			$content.css("width", width + "px");
@@ -116,5 +115,32 @@ $('document').ready(function(){
 	        'minimum-scale=' + viewport_scale + ', maximum-scale=' + viewport_scale);
 	}
 
+	function setFeed(category){
+		$('.bill-feed').empty();
+		$('.loading').css('visiblilty', 'visible');
+		var query;
+		if(category != "") {
+			query = "query="+category;
+		} else {
+			query = "";
+		}
+		var url = 'http://harryrickards.com/api/bills.json?' + query + "&length=15";
+		console.log(url);
+		$.ajax({
+    		url: url,
+    		dataType: 'jsonp'
+		}).done(function(data) {
+			$.each(data, function(index, datum) {
+				var html = "<div class='bill'>";
+				html += "<div id='ground'></div>";
+				html += "<p class='fade'>" + datum['title'] + "</p>";
+				html += "<span class='fade'>" + datum['type'] + "</span>";
+				html += "<h2 class='appear' style='display: none;'>" + datum['description'] + "</h2>";
+				html += "</div>";
+				$('.loading').css('visiblilty', 'hidden');
+		    	$('.bill-feed').append(html);
+	   		});
+		});
+	}
 
 });
