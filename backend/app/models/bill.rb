@@ -149,7 +149,7 @@ class Bill
   end
 
   # Negatively vote on a bill
-  def upvote
+  def downvote
     self.downvotes += 1
     self.save
   end
@@ -160,7 +160,7 @@ class Bill
     case vote
     when 1
       self.upvote
-    when -1
+    when 0
       self.downvote
     end
     return {status: 'Successful', new_score: self.score}
