@@ -206,11 +206,18 @@ class Bill
   end
 
   def large_photo_real
+    sleep 0.05
     query = URI.escape self.humanized_slug
     url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?Query=%27#{query}%27&$top=50&$format=json&ImageFilters=%27Size%3ALarge%27"
     response = HTTParty.get url, :basic_auth => {:username => '', :password => API_KEY}, :format => :json
     begin
-      return response.first.last["results"].first["MediaUrl"]
+      images = response.first.last["results"].map { |res| [res["Width"], res["MediaUrl"]] }
+      image = images.select { |image| image.first.to_i >= 770 }.first
+      if image
+        return image.last
+      else
+        return images.sort_by { |image| image.first.to_i }.last.last
+      end
     rescue
       return ""
     end
