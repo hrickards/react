@@ -17,7 +17,7 @@ require_relative 'app/helpers'
 require_relative 'app/models/bill'
 require_relative 'app/models/person'
 
-LIMIT = 40
+LIMIT = 15
 
 module OpenParliament
   class Api < Grape::API
