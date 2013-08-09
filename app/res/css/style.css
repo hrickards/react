@@ -1,4 +1,4 @@
--body {
+body {
 	min-width: 340px;
 	margin: 0;
 	overflow: hidden;
@@ -175,6 +175,7 @@ html {
 	min-width:370px;
 	border-bottom:1px solid #666;
 	padding:0;
+	overflow: hidden;
 }
 
 .bill h2 {
@@ -192,6 +193,7 @@ html {
 	right: 1em;
 	height: auto;
 	padding: 0 5px;
+	font-size: 1em;
 }
 
 .bill span {
@@ -209,16 +211,26 @@ html {
 
 .bill h2 {
 	position:absolute;
-	top:1%;
-	right:1%;
+	top:1em;
+	right:1em;
 	z-index:1;
 	opacity:1!important;
 	margin:0;
 	padding:10px;
 }
 
+.appear {
+	display: none;
+	background: rgb(0, 0, 0); /* fallback color */
+	background: rgba(0, 0, 0, 0.6);
+	color: white; 
+	font-size: 1em;
+	font-weight: normal;
+	max-height: 80%;
+}
+
 .ground {
-	background: #ffffff url(./image.jpg) no-repeat 50% 50%;
+	background: #9D141B url(./image.jpg) no-repeat 50% 50%;
 	min-height:100%;
 	min-width:100%;
 	box-shadow:1px 1px 1px #777;
@@ -242,6 +254,14 @@ html {
 	text-align: center;
 }
 
+.ground:hover ~ .appear {
+	display: block;
+}
+
+.ground:hover ~ .fade {
+	display: none;
+}
+
 .active .background {
 	background-color: #F7F5FA;
 }
@@ -253,6 +273,80 @@ html {
 	top: -46px;
 	position: relative;
 	z-index: -1;
+}
+
+.my-mp {
+	display: none;
+	width: 80%;
+	margin-left: 10%;
+}
+
+.my-mp input {
+	width: 80%;
+	border: 0;
+	margin: 10px auto;
+	padding: 0;
+	outline: 0;
+	list-style: none;
+	-webkit-appearance: none;
+	background-color: #e9f3e8;
+	width: 100%;
+	font: 16px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+	border: 1px solid #b4b9c1;
+	box-shadow: 0 1px 0 #fff;
+	-o-box-shadow: 0 1px 0 #fff;
+	-moz-box-shadow: 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 0 #fff;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #1491ad;
+	padding: 8px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.my-mp label {
+	display: block;
+	width: 100%;
+	border-bottom: 3px #E8E8E8 solid;
+}
+
+.button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+	margin: 15px auto;
+}
+
+.button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}
+
+.button:active {
+	position:relative;
+	top:1px;
 }
 
 /*make each menu take the whole page when on a mobile and hide the supper menu*/
