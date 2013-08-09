@@ -30,7 +30,7 @@
           &nbsp;<%= @bill.description %>
 				</div></br>
 				<div id="progress">
-					<img src="../res/img/progress.png" id="progimage">
+          <img src="<%= @bill.diagram %>" id="progimage">
 					</br>
           <p><%= @bill.humanized_last_event %></p>
 				</div>
@@ -42,7 +42,6 @@
 						<img id="socialbar" src="../res/img/voting.png">
 					</div>
 					<div id="view">
-						Click to see your local MP's view.
 					</div>
 					<br>
 					<div id="person">

@@ -242,6 +242,7 @@ class Bill
 
   def semi_humanized_slug
     "#{self.humanized_slug} #{self.leg_type.capitalize}"
+  end
 
   def mp_view(mpid)
     url = "http://www.publicwhip.org.uk/mp.php?mpid=#{mpid}&house=commons&display=allvotes"

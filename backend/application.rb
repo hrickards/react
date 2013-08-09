@@ -57,7 +57,7 @@ module OpenParliament
         requires :mpid, type: Integer, desc: "member_id of local MP, as in TWFY and Public Whip."
       end
       get ':slug/:mpid' do
-        bill = Bill.find_by_slug params[:slug]
+        bill = Bill.find_by slug: params[:slug]
         bill.mp_view params[:mpid]
       end
 

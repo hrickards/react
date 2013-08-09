@@ -3,7 +3,7 @@ $(document).ready(function() {
     $.ajax({
       url: url
     }).done(function(data) {
-      var html = data['vote']  + "% in favour, " + data['loyal'] + "% loyal to party.";
+      var html = "MP: " + data['vote']  + "% in favour, " + data['loyal'] + "% loyal to party.";
       $('#view').html(html);
     });
 });
