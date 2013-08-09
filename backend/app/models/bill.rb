@@ -242,5 +242,19 @@ class Bill
 
   def semi_humanized_slug
     "#{self.humanized_slug} #{self.leg_type.capitalize}"
+
+  def mp_view(mpid)
+    url = "http://www.publicwhip.org.uk/mp.php?mpid=#{mpid}&house=commons&display=allvotes"
+    doc = Nokogiri::HTML cache_open(url)
+    rows = doc.xpath("//table[@class='votes']//tr")
+    vals = rows.map { |row| row.xpath("td") }.select { |tds| tds[2].text.include? self.humanized_slug }.map { |tds| [tds[4].text, tds[5].text] }
+
+    yes = vals.select { |vote, loyalty| vote == "aye" }.count
+    loyal = vals.select { |vote, loyalty| loyalty == "Loyal" }.count
+
+    {
+      vote: (yes.to_f/vals.count*100).to_i,
+      loyal: (loyal.to_f/vals.count*100).to_i
+    }
   end
 end
