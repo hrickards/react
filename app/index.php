@@ -73,7 +73,7 @@
 							<div class="button" id="set-mp">Set MP</div>
 						</div>
 						<div class="your-mp">
-							<div id="mp-image"></div>
+							<img id="mp-image" src=""></img>
 							<h3 id="name"></h3>
 							<h3 id="const"></h3>
 							<h3 id="mp-error"></h3>

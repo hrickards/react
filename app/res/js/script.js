@@ -32,20 +32,32 @@ $('document').ready(function(){
 		var key = 'FqQ7HAE6VXorA8NhKHAmUeW5';
 		var url = 'http://www.theyworkforyou.com/api/getMP?key=' + key + '&postcode=' + pcode + '&constituency=' + con + '&&output=js';
 		console.log(url);
+
+		$('#name').text("");
+		$('#party').text("");
+		$('#image').attr('src', "");
+
 		$.ajax({
 			url: url,
 			dataType: 'jsonp',
 			timeout: 10000,
 		}).success(function(data){
 			var id = data['member_id'];
-			var name = data['first_name'] + data['last_name'];
+			var name = data['first_name'] + " " + data['last_name'];
 			var party = data['party'];
 			var image = "http://theyworkforyou.com" + data['image'];
-
-			createCookie("mp", id, 100);
-			$('#name').text(name);
+			console.log(id + name + party + image);
+			if(id != undefined){
+				createCookie("mp", id, 100);
+				$('#name').text(name);
+				$('#party').text(party);
+				$('#image').attr('src', image);
+			} else {
+				$('#mp-error').text("MP not found...");
+			}
 		}).error(function(){
 			console.log("fail");
+			$('#mp-error').text("Something went wrong...");
 		});
 	});
 
@@ -306,15 +318,18 @@ $('document').ready(function(){
 	}
 
 	function setPinned() {
-		var categories = readCookie("pins").split("||");
-		var length = categories.length;
+		var categories = readCookie("pins")
+		if(categories != null){
+			categories = categories.split("||");
+			var length = categories.length;
 
-		for(i=1; i<length; i++){
-			var $cat = $('#'+categories[i])
-			var $pinned = $cat.clone(true);
-			$cat.addClass("added");
-			$pinned.children('.pin').attr("src", "./res/img/remove.png").addClass("remove").removeClass("pin").removeAttr("style");
-			$pinned.addClass("pinned").insertAfter($('#pinned'));
+			for(i=1; i<length; i++){
+				var $cat = $('#'+categories[i])
+				var $pinned = $cat.clone(true);
+				$cat.addClass("added");
+				$pinned.children('.pin').attr("src", "./res/img/remove.png").addClass("remove").removeClass("pin").removeAttr("style");
+				$pinned.addClass("pinned").insertAfter($('#pinned'));
+			}
 		}
 	}
 
