@@ -160,7 +160,10 @@ class Bill
 
   # Find a bill with the given slug
   def self.find_by_slug(slug)
-    self.find_by slug: slug
+    result = self.find_by(slug: slug)
+    data = JSON.parse(result.to_json)
+    %w{humanized_slug large_photo}.each { |key| data[key] = result.send(key) }
+    data
   end
 
   # Positively vote on a bill
