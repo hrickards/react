@@ -4,6 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Open Parliament</title>
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="load_view.js"></script>
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" media="screen" href="../res/css/bill-view.css" />
 		<meta name="description" content=""/>
@@ -21,7 +22,7 @@
 			<div class="holder">
 				</br>
 				<div id="image">
-          <div id="title"><%= @bill.humanized_slug %></div>
+          <div id="title"><%= @bill.semi_humanized_slug %></div>
           <img src="<%= @bill.large_photo %>" id="img" width="770" >
 				</div>
 				<div id="summary">
