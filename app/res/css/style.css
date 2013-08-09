@@ -1,4 +1,4 @@
-body {
+-body {
 	min-width: 340px;
 	margin: 0;
 	overflow: hidden;
@@ -28,13 +28,7 @@ html {
 .title-bar {
 	width: 100%;
 	height: 100%;
-}
-
-.title-bar h1 {
 	text-align: center;
-	margin: 0 auto;
-	color: white;
-	padding-top: 8px;
 }
 
 .lower {
@@ -68,6 +62,7 @@ html {
 	margin: 0;
 	background-color: white;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	box-shadow: 7px 0px 14px -1px #222, inset 0 -20px 40px -15px rgba(255, 255, 255, 0.5);
 }
 
@@ -95,6 +90,7 @@ html {
 	border-bottom: 1px #E8E8E8 dashed;
 	border-top: 1px #E8E8E8 dashed;
 	padding-top: 5px;
+	line-height: 38px;
 }
 
 .search-icon {
@@ -123,9 +119,12 @@ html {
 }
 
 .background {
-	overflow: hidden;
 	width: 100%;
 	height: 100%;
+}
+
+.title .background {
+	margin-top: 3px;
 }
 
 .categories li {
@@ -148,8 +147,10 @@ html {
 .border {
 	width: 80%;
     height: 1px;
-    margin: 10px auto 0px auto;
+    margin: -45px auto 0px auto;
     border-bottom: 1px solid #e8e8e8;	
+    position: relative;
+    bottom: 0px;
 }
 
 .pinned {
@@ -162,11 +163,6 @@ html {
 
 .shadow {
 	box-shadow:1px 1px 1px #777;
-}
-
-.spanp {
-	font-weight:700;
-	font-size:16px;
 }
 
 .bill {
@@ -234,6 +230,7 @@ html {
 	width: 100%;
 	height: 60px;
 	background-color: #EEE;
+	position: absolute;
 }
 
 .load-more p {
@@ -243,6 +240,19 @@ html {
 	font-weight: bold;
 	color: #999;
 	text-align: center;
+}
+
+.active .background {
+	background-color: #F7F5FA;
+}
+
+.background {
+	width: 150%;
+	height: 50px;
+	left: -50px;
+	top: -46px;
+	position: relative;
+	z-index: -1;
 }
 
 /*make each menu take the whole page when on a mobile and hide the supper menu*/
@@ -275,6 +285,7 @@ html {
 
 #categories {
 	height: 70px;
+	line-height: 25px;
 }
 
 #categories + li {
@@ -312,6 +323,14 @@ html {
 	position: relative;
 	top: -50%;
 	right: 5%;
+	visibility: visible;
+}
+
+#logo {
+	height: 95%;
+	margin: 0 auto;
+	position: relative;
+	bottom: -2px;
 }
 
 ::-webkit-input-placeholder {

@@ -5,7 +5,7 @@
 		<title>Open Parliament</title>
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<meta name="viewport" content="width=device-width" />
-		<link rel="stylesheet" type="text/css" media="screen" href="./res/css/bill-view.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="../res/css/bill-view.css" />
 		<meta name="description" content=""/>
 		<meta name="keywords" content="">
 	</head>
@@ -13,7 +13,7 @@
 		<div class="top-bar">
 			<div class="title-bar">
 				<div id="view-nav">&#9776</div>
-				<img class="loading" src="./resources/img/ajax-loader.gif"/>
+				<img class="loading" src="../resources/img/ajax-loader.gif"/>
 				<h1><span id="open">Open</span> Parliament</h1>
 			</div>
 		</div>
@@ -21,40 +21,41 @@
 			<div class="holder">
 				</br>
 				<div id="image">
-					<div id="title">Kitten Appreciation Bill</div>
-					<img src="http://placekitten.com/400/300" id="img">
+          <div id="title"><%= @bill.humanized_slug %></div>
+          <img src="<%= @bill.large_photo %>" id="img" width="770" >
 				</div>
-				</br>
+				<div id="summary">
+					<h3>&nbsp;&nbsp;&nbsp;&nbsp;Summary:</h3>
+          &nbsp;<%= @bill.description %>
+				</div></br>
 				<div id="progress">
-					<img src="./res/img/progress.png" id="progimage">
+					<img src="../res/img/progress.png" id="progimage">
 					</br>
-					<p> Currently at its report stage in the Commons. There has been a debate on all aspects of the bill</p>
+          <p><%= @bill.humanized_last_event %></p>
 				</div>
 				<div id="social">
 					<div id="public">
-						Public Oppinion
+						Public Opinion
 					</div>
 					<div id="af">
-						<img id="socialbar" src="./res/img/voting.png">
+						<img id="socialbar" src="../res/img/voting.png">
 					</div>
 					<div id="view">
 						Click to see your local MP's view.
 					</div>
+					<br>
 					<div id="person">
 						<div id="map">
-							<img id="mmm"src="./res/img/map.png">
+							<img id="mmm"src="../res/img/map.png">
 						</div>
-						<div id="iam">
+						<!--<div id="iam">
 							<h3>I am:</h3>
-							<h2>For</h2>
-							<h2>Against</h2>
-						</div>
+							<div id="buttons">
+								<h2>For</h2>
+								<h2>Against</h2>
+							</div>
+						/</div>-->
 					</div>
-				</div>
-				<div id="summary">
-					<h3>&nbsp;&nbsp;&nbsp;&nbsp;Summary:</h3>
-					&nbsp;The Bill would make the kitten the official symbolic animal of the United Kingdom. Every day, UK citizens would have to observe five minutes of silent kitten contemplation. 
-					<br>
 				</div>
 			</div>
 		</div>

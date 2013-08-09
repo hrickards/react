@@ -232,4 +232,8 @@ class Bill
       return ""
     end
   end
+
+  def humanized_last_event
+    self.events.last.first
+  end
 end
