@@ -5,8 +5,10 @@
 		<title>Open Parliament</title>
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="load_view.js"></script>
+		<script src="vote.js"></script>
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" media="screen" href="../res/css/bill-view.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./<%= @bill.slug %>/votebar.css" />
 		<meta name="description" content=""/>
 		<meta name="keywords" content="">
 	</head>
@@ -30,6 +32,7 @@
           &nbsp;<%= @bill.description %>
 				</div></br>
 				<div id="progress">
+          <img src="http://harryrickards.com/images/legend.gif">
           <img src="<%= @bill.diagram %>" id="progimage">
 					</br>
           <p><%= @bill.humanized_last_event %></p>
@@ -39,25 +42,38 @@
 						Public Opinion
 					</div>
 					<div id="af">
-						<img id="socialbar" src="../res/img/voting.png">
-					</div>
-					<div id="view">
-					</div>
-					<br>
-					<div id="person">
-						<div id="map">
-							<img id="mmm"src="../res/img/map.png">
-						</div>
-						<!--<div id="iam">
-							<h3>I am:</h3>
-							<div id="buttons">
-								<h2>For</h2>
-								<h2>Against</h2>
-							</div>
-						/</div>-->
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
+            <div id="votebar">
+              <div id="yesbar">
+                <p id="yes_percentage"><%= @yes %>%</p>
+                <div id="up">
+                  <img src="../res/img/up.png" id="up_img"><span id="upvotes"><%= @bill.upvotes %></span>
+                </div>
+              </div>
+              <div id="nobar">
+                <p id="no_percentage"><%= 100 - @yes %>%</p>
+                <div id="down">
+                  <img src="../res/img/down.png" id="down_img"><span id="downvotes"><%= @bill.downvotes %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="view">
+          </div>
+          <br>
+          <div id="person">
+            <div id="map">
+              <img id="mmm"src="../res/img/map.png">
+            </div>
+            <!--<div id="iam">
+              <h3>I am:</h3>
+              <div id="buttons">
+                <h2>For</h2>
+                <h2>Against</h2>
+              </div>
+              /</div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
