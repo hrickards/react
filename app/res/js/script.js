@@ -27,6 +27,8 @@ $('document').ready(function(){
 	}
 
 	$('#set-mp').click(function(){
+		jqXHR.abort();
+		$('.bill-feed').empty();
 		var con = $('#con').val();
 		var pcode = $('#pcode').val().replace(" ", "");
 		var key = 'FqQ7HAE6VXorA8NhKHAmUeW5';
@@ -35,7 +37,8 @@ $('document').ready(function(){
 
 		$('#name').text("");
 		$('#party').text("");
-		$('#image').attr('src', "");
+		$('#mp-image').css('background', "");
+		$('#mp-error').text("");
 
 		$.ajax({
 			url: url,
@@ -46,12 +49,12 @@ $('document').ready(function(){
 			var name = data['first_name'] + " " + data['last_name'];
 			var party = data['party'];
 			var image = "http://theyworkforyou.com" + data['image'];
-			console.log(id + name + party + image);
+			console.log(id + name + party + " " + image);
 			if(id != undefined){
 				createCookie("mp", id, 100);
 				$('#name').text(name);
 				$('#party').text(party);
-				$('#image').attr('src', image);
+				$('#mp-image').css('background', "url('" + image + "') no-repeat 50% 50%");
 			} else {
 				$('#mp-error').text("MP not found...");
 			}
@@ -78,6 +81,7 @@ $('document').ready(function(){
 
 	$('.title').not('#categories').not('#my-mp').click(function(){
 		closeNav();
+		$('.bill-feed').empty();
 		$('.content').css('background', "white");
 		//$('#loading-big').css('visibility', 'hidden');
 	});
