@@ -73,9 +73,10 @@
 							<div class="button" id="set-mp">Set MP</div>
 						</div>
 						<div class="your-mp">
-							<img id="mp-image" src=""></img>
+							<div id="mp-image"></div>
+							<br>
 							<h3 id="name"></h3>
-							<h3 id="const"></h3>
+							<h3 id="party"></h3>
 							<h3 id="mp-error"></h3>
 						</div>
 					</div>
