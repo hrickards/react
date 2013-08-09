@@ -43,7 +43,7 @@ html {
 	top: 53px;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	background-color: white;
+	background: white;
 }
 
 .loading {
@@ -213,7 +213,6 @@ html {
 	position:absolute;
 	top:1em;
 	right:1em;
-	z-index:1;
 	opacity:1!important;
 	margin:0;
 	padding:10px;
@@ -313,6 +312,7 @@ html {
 	display: block;
 	width: 100%;
 	border-bottom: 3px #E8E8E8 solid;
+	font-size: 1.3em;
 }
 
 .button {

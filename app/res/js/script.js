@@ -15,26 +15,43 @@ $('document').ready(function(){
 	$('#loading-small').hide();
 
 	resizeStuff();
-	setFeed("");
 	setPinned();
+	setFeed("");
 
 	if($('.pinned').length !== 0) {
 		$('#pinned').addClass("active");
+		setPinnedFeed();
 	} else {
 		$('#new').addClass("active");
+		setFeed("");
 	}
 
-	/*$('.ground').live('mouseenter', function() {
-		console.log("bill enter");	
-		$(this).next(".fade").css('display', 'none');
-		$(this).next(".appear").css('display', 'block');
-	}).live('mouseleave', function() {	
-		console.log("bill leave");
-		$(this).next(".fade").css('display', 'block');
-		$(this).next(".appear").css('display', 'none');
-	});*/
+	$('#set-mp').click(function(){
+		var con = $('#con').val();
+		var pcode = $('#pcode').val().replace(" ", "");
+		var key = 'FqQ7HAE6VXorA8NhKHAmUeW5';
+		var url = 'http://www.theyworkforyou.com/api/getMP?key=' + key + '&postcode=' + pcode + '&constituency=' + con + '&&output=js';
+		console.log(url);
+		$.ajax({
+			url: url,
+			dataType: 'jsonp',
+			timeout: 10000,
+		}).success(function(data){
+			var id = data['member_id'];
+			var name = data['first_name'] + data['last_name'];
+			var party = data['party'];
+			var image = "http://theyworkforyou.com" + data['image'];
+
+			createCookie("mp", id, 100);
+			$('#name').text(name);
+		}).error(function(){
+			console.log("fail");
+		});
+	});
 
 	$('#my-mp').click(function(){
+		closeNav();
+		$('.content').css('background', "white url('./res/img/westminster.jpg') no-repeat 50% 50%");
 		$('.bill-feed').empty();
 		$('.load-more').hide();
 		$('.my-mp').show();
@@ -42,12 +59,19 @@ $('document').ready(function(){
 	});
 
 	$('#new').click(function(){
+		$('#loading-big').css('visibility', 'visible');
+		$('.content').css('background', "white");
 		setFeed("");
 	});
 
-	$('.title').not('#categories').click(function(){
+	$('.title').not('#categories').not('#my-mp').click(function(){
 		closeNav();
-		$('#loading-big').css('visibility', 'hidden');
+		$('.content').css('background', "white");
+		//$('#loading-big').css('visibility', 'hidden');
+	});
+
+	$('#pinned').click(function(){
+		setPinnedFeed();
 	});
 
 	$('.icon').click(function(e){
@@ -111,6 +135,7 @@ $('document').ready(function(){
 
 	$('.category').on("click", function(){
 		$('.my-mp').hide();
+		$('.content').css('background', "white");
 		jqXHR.abort();
 		setFeed($(this).text().replace(" ", "_"));
 	}).mouseenter(function(){
@@ -183,10 +208,12 @@ $('document').ready(function(){
 		} else {
 			query = "";
 		}
-		var url = 'http://harryrickards.com/api/bills.json?' + query + "&limit=" + limit;
+		var url = "http://harryrickards.com/api/bills.json?limit=" + limit;
 		console.log(url);
 		//get bill info
 		jqXHR = $.ajax({
+			data: {query:[category]},
+			traditional: 'false',
     		url: url,
     		dataType: 'jsonp',
     		timeout: 20000,
@@ -289,6 +316,16 @@ $('document').ready(function(){
 			$pinned.children('.pin').attr("src", "./res/img/remove.png").addClass("remove").removeClass("pin").removeAttr("style");
 			$pinned.addClass("pinned").insertAfter($('#pinned'));
 		}
+	}
+
+	function setPinnedFeed(){
+		var query = new Array();
+		$('.my-mp').hide();
+		jqXHR.abort();
+		$('.pinned').each(function(){
+			query.push($(this).text());
+		});
+		setFeed(query);
 	}
 
 	function toggleNav(){

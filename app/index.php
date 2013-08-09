@@ -67,10 +67,16 @@
 						<h2>Set your MP</h2>
 						<div class="form">
 							<label for="pcode">Postcode</label>
-							<input placeholder="Postcode" id="pcode"></input>
+							<input placeholder="Postcode" id="pcode" type="postcode"></input>
 							<label for="con">Constituency</label>
 							<input placeholder="Constituency" id="con"></input>
-							<div class="button">Find</div>
+							<div class="button" id="set-mp">Set MP</div>
+						</div>
+						<div class="your-mp">
+							<div id="mp-image"></div>
+							<h3 id="name"></h3>
+							<h3 id="const"></h3>
+							<h3 id="mp-error"></h3>
 						</div>
 					</div>
 
