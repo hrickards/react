@@ -20,17 +20,19 @@
 
 			<div class="top-bar">
 				<div id="view-nav"><img src="./res/img/more.png"/></div>
-				<div class="title-bar"><img id="logo" src="./res/img/logo.png"/></div>
+				<div class="title-bar">
+					<h1>re: Act</h1>
+				</div>
 			</div>
 
 			<div class="lower">
 				<div class="nav-pane">
 					<div class="nav-scroll">
 						<ul class="categories">
-							<li class="title" id="setting">Settings<div class='background'></div></li>
-							<li class="title" id="new">New<div class='background'></div></li>
-							<li class="title" id="Popular">Popular<div class='background'></div></li>
-							<li class="title" id="pinned">Pinned Feed<div class='background'></div></li>
+							<li class="title" id="about">About</li>
+							<li class="title" id="new">New</li>
+							<li class="title" id="Popular">Popular</li>
+							<li class="title" id="pinned">Pinned Feed</li>
 							<li class="title" id="categories">Categories<div id="search"><img class="search-icon icon" src="./res/img/search.png" /><input id="filter-categories" type="text" name="filter" placeholder=" Filter"></div></li>
 							<?php
 								$cats = fopen("./res/categories.txt", "r");
@@ -39,7 +41,6 @@
 									$cat = fgets($cats);
 									if($cat != ""){
 										$cat = strtolower($cat);
-										$cat = preg_replace('~[[:cntrl:]]~', "", $cat);
 										$classes = 'category ';
 										if(substr($cat, 0, 1) == "!"){
 											$cat = substr($cat, 1);
@@ -51,7 +52,7 @@
 											$classes = 'normal ' . $classes;
 										}
 										$id = str_replace(" ", "_", strtolower($cat));
-										echo "<li class='".$classes."' id='".$id."' master='".$main."'>".$cat."<img class='pin icon' src='./res/img/pin.png'><div class='background'></div><div class='border'>&nbsp;</div></li>";
+										echo "<li class='".$classes."' id='".$id."' master='".$main."'>".$cat."<img class='pin icon' src='./res/img/pin.png'><div class='border'>&nbsp;</div></li>";
 									}
 								}
 								fclose($cats);
@@ -64,10 +65,8 @@
 					<img class="loading" id="loading-big" src="./res/img/ajax-loader.gif"/>
 					<ul class="bill-feed">
 					</ul>
-					<div class="load-more">
-						<p>Load More</p>
-						<img class="loading" id="loading-small" src="./res/img/ajax-loader.gif"/>
-					</div>
+					<div class="load-more"><p>Load More</p><img class="loading" id="loading-small" src="./res/img/ajax-loader.gif"/>
+</div>
 				</div>
 			</div>
 
