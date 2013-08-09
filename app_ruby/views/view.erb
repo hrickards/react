@@ -1,5 +1,63 @@
-<html>
-  <body>
-    <h1><%= @bill.title %></h1>
-  </body>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Open Parliament</title>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<meta name="viewport" content="width=device-width" />
+		<link rel="stylesheet" type="text/css" media="screen" href="../res/css/bill-view.css" />
+		<meta name="description" content=""/>
+		<meta name="keywords" content="">
+	</head>
+	<body>
+		<div class="top-bar">
+			<div class="title-bar">
+				<div id="view-nav">&#9776</div>
+				<img class="loading" src="../resources/img/ajax-loader.gif"/>
+				<h1><span id="open">Open</span> Parliament</h1>
+			</div>
+		</div>
+		<div class="content" id="doc">
+			<div class="holder">
+				</br>
+				<div id="image">
+          <div id="title"><%= @bill.humanized_slug %></div>
+          <img src="<%= @bill.large_photo %>" id="img" width="770" >
+				</div>
+				<div id="summary">
+					<h3>&nbsp;&nbsp;&nbsp;&nbsp;Summary:</h3>
+          &nbsp;<%= @bill.description %>
+				</div></br>
+				<div id="progress">
+					<img src="../res/img/progress.png" id="progimage">
+					</br>
+					<p> Currently at its report stage in the Commons. There has been a debate on all aspects of the bill</p>
+				</div>
+				<div id="social">
+					<div id="public">
+						Public Opinion
+					</div>
+					<div id="af">
+						<img id="socialbar" src="../res/img/voting.png">
+					</div>
+					<div id="view">
+						Click to see your local MP's view.
+					</div>
+					<br>
+					<div id="person">
+						<div id="map">
+							<img id="mmm"src="../res/img/map.png">
+						</div>
+						<!--<div id="iam">
+							<h3>I am:</h3>
+							<div id="buttons">
+								<h2>For</h2>
+								<h2>Against</h2>
+							</div>
+						/</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
