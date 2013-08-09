@@ -51,6 +51,16 @@ module OpenParliament
         Bill.find_by_slug params[:slug]
       end
 
+      desc "Return an MPs vote record on a single bill"
+      params do
+        requires :slug, type: String, desc: "Slug (machine-readable name) of the bill. Generally a lowercase version of the base title with spaces replaced by underscores."
+        requires :mpid, type: Integer, desc: "member_id of local MP, as in TWFY and Public Whip."
+      end
+      get ':slug/:mpid' do
+        bill = Bill.find_by_slug params[:slug]
+        bill.mp_view params[:mpid]
+      end
+
       desc "Vote on a single bill"
       params do
         requires :slug, type: String, desc: "Slug (machine-readable name) of the bill. Generally a lowercase version of the base title with spaces replaced by underscores."
