@@ -40,16 +40,19 @@
             <img src="<%= @bill.large_photo %>" id="img" width="770" >
           </div>
           <div id="summary">
-            <h3>&nbsp;&nbsp;&nbsp;&nbsp;Summary:</h3>
-            &nbsp;<%= @bill.description %>
+            <h3 style="margin-bottom: 0;">Summary:</h3>
+            <%= @bill.description %>
           </div></br>
           <div id="progress">
             <img src="<%= @bill.diagram %>" id="progimage">
             </br>
-            <p><%= @bill.humanized_last_event %></p>
+            <p><b>Last event:</b> <%= @bill.humanized_last_event %></p>
           </div>
           <div id="social">
-            <div id="view">
+            <div id="view" style="margin-top: 10px;">
+              Your MP
+            </div>
+            <div id="actual_view">
             </div>
             <div id="contact_mp">
               <button id="contact_button">Contact Your MP</button>
@@ -73,7 +76,6 @@
                 </div>
               </div>
             </div>
-            <br>
             <div id="person">
               <div id="map_canvas" style="height: 100%"></div>
               <!--<div id="iam">

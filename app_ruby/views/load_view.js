@@ -20,9 +20,9 @@ $(document).ready(function() {
       url: url
     }).done(function(data) {
       var html = "Your MP: " + data['vote']  + "% in favour, " + data['loyal'] + "% loyal to party.";
-      $('#view').html(html);
+      $('#actual_view').html(html);
     }).error(function() {
-      $('#view').html("Your MP hasn't voted on this bill yet.");
+      $('#actual_view').html("Your MP hasn't voted on this bill yet.");
       console.log("No data available for that MP and Bill");
     });
     $.ajax({

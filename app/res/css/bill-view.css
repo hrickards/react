@@ -19,6 +19,10 @@
 	width: 70%;
 	margin: 0 auto;
 	height: auto }
+
+#summary h3  {
+	font-size: 1.5em
+}
  
 #progress { border-bottom: 1px solid black }
  
@@ -51,12 +55,12 @@
 #name h2 { text-decoration:underline;padding-left: 20px }
  
 #view {
-	height: 1.2em;
+	height: 1.5em;
 	width: 100%;
 	display: block;
 	font-weight: bold;
-	text-decoration: underline;
-	font-size: 1.2em }
+	font-size: 1.5em
+}
  
 #note {
 	padding-left: 10px;
