@@ -19,7 +19,7 @@ $(document).ready(function() {
     $.ajax({
       url: url
     }).done(function(data) {
-      var html = "MP: " + data['vote']  + "% in favour, " + data['loyal'] + "% loyal to party.";
+      var html = "Your MP: " + data['vote']  + "% in favour, " + data['loyal'] + "% loyal to party.";
       $('#view').html(html);
     }).error(function() {
       console.log("No data available for that MP and Bill");
