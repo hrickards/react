@@ -19,4 +19,6 @@ when "example"
   Bill.scrape "/bills/2013-14/antisocialbehaviourcrimeandpolicingbill.html"
 when "scrape_emails"
   MpUrl.scrape_emails
+when "fix_images"
+  Bill.fix_all_images
 end

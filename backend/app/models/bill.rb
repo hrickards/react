@@ -57,6 +57,20 @@ class Bill
     self.all.each { |bill| bill.scrape_diagram }
   end
 
+  def self.fix_all_images
+    self.all.each { |bill| bill.fix_image }
+  end
+
+  def fix_image
+    filename = "public/images/progress/#{self.id}.png"
+    orig_filename = "public/images/progress/#{self.id}.png.orig"
+    return unless File.exist? filename
+
+    FileUtils.cp filename, orig_filename unless File.exist? orig_filename
+    puts self.slug
+    %x{convert #{orig_filename} -transparent white #{filename}}
+  end
+
   # Scrape the votes for an individual bill
   def scrape_divisions
     stitle = slugify_title self.title
