@@ -24,6 +24,15 @@ $(document).ready(function() {
     }).error(function() {
       console.log("No data available for that MP and Bill");
     });
+    $.ajax({
+      url: "http://harryrickards.com/api/mp/" + mpId
+    }).done(function(data) {
+      console.log(document.email)
+    });
+
+    $('#contact_button').click(function() {
+        window.open("http://www.writetothem.com/write?who=46828&pc=RH11+9BQ", "_blank");
+    });
 	
 	$('#back').click(function(){
 		console.log("back");

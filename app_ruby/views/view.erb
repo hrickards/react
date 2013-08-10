@@ -8,6 +8,19 @@
     <script src="vote.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=false"></script>
     <script src="../res/js/map.js"></script>
+    <!-- AddThis Smart Layers BEGIN -->
+    <!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52062bf31a721985"></script>
+    <script type="text/javascript">
+      addthis.layers({
+          'theme' : 'transparent',
+          'share' : {
+          'position' : 'left',
+          'numPreferredServices' : 5
+          }   
+          });
+</script>
+<!-- AddThis Smart Layers END -->
     <meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" type="text/css" media="screen" href="../res/css/style.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../res/css/bill-view.css" />
@@ -30,8 +43,10 @@
             <h3>&nbsp;&nbsp;&nbsp;&nbsp;Summary:</h3>
             &nbsp;<%= @bill.description %>
           </div></br>
+          <div id="contact_mp">
+            <button id="contact_button">Contact</button>
+          </div>
           <div id="progress">
-            <img src="http://harryrickards.com/images/legend.gif" style=" margin-right: 108; float: right; ">
             <img src="<%= @bill.diagram %>" id="progimage">
             </br>
             <p><%= @bill.humanized_last_event %></p>

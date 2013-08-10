@@ -49,7 +49,7 @@ class Person
 
   def self.get_email(mpid)
     {
-      email: 'charles.hendry.mp@parliament.uk'
+      email: 'henry.smith.mp@parliament.uk'
     }
   end
 
