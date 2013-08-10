@@ -24,4 +24,9 @@ $(document).ready(function() {
     }).error(function() {
       console.log("No data available for that MP and Bill");
     });
+	
+	$('#back').click(function(){
+		console.log("back");
+		window.open("/", "_parent");
+	});
 });

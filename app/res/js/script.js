@@ -30,11 +30,6 @@ $('document').ready(function(){
 		window.open("/bills/"+$(this).attr('id'), "_parent");
 	});
 
-	$('#back').click( function () {
-		window.open("/", "_parent");
-		console.log("back clicked!");
-	});
-
 	$('#set-mp').click(function(){
 		jqXHR.abort();
 		$('.bill-feed').empty();
