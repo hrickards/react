@@ -11,8 +11,8 @@ $.ajax({
   //console.log(heatMapData);
 
   map = new google.maps.Map(document.getElementById('map_canvas'), {
-    center: new google.maps.LatLng(data['votes_agg'][0][0]['lat'],  data['votes_agg'][0][0]['lng']),
-    zoom: 8,
+    center: new google.maps.LatLng(52.402419, -1.208496),
+    zoom: 6,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 

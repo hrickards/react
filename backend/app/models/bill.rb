@@ -270,8 +270,10 @@ class Bill
     constituencies = twfy_client.constituencies.map { |c| c.name }
 
     # TODO Do this properly
-    total_votes = self.upvotes + self.downvotes
-    votes = (0...10*self.upvotes).map { |i| constituencies[Random.rand(constituencies.count)] }.map { |loc| {'type' => 1, 'location' => loc} } + (0...10*self.downvotes).map { |i| constituencies[Random.rand(constituencies.count)] }.map { |loc| {'type' => 0, 'location' => loc} }
+    total_upvotes = self.upvotes
+    total_downvotes = self.downvotes
+    return [] if total_upvotes == 0 and total_downvotes == 0
+    votes = (0...total_upvotes).map { |i| constituencies[Random.rand(constituencies.count)] }.map { |loc| {'type' => 1, 'location' => loc} } + (0...total_downvotes).map { |i| constituencies[Random.rand(constituencies.count)] }.map { |loc| {'type' => 0, 'location' => loc} }
 
     vs = votes.group_by { |vote| vote['location'] }.map { |location, votes| [location, votes.map { |vote| normalise_type(vote['type']) }] }.map { |location, types| [location, types.sum/types.count.to_f] }
     avgs = vs.map { |location, avg| avg }
