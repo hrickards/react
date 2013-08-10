@@ -49,7 +49,7 @@ class Person
 
   def self.get_email(mpid)
     {
-      email: 'charles.hendry.mp@parliament.uk'
+      email: MpUrl.find_by(mpid: mpid).email
     }
   end
 

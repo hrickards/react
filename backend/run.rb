@@ -17,4 +17,6 @@ when "console"
   binding.pry
 when "example"
   Bill.scrape "/bills/2013-14/antisocialbehaviourcrimeandpolicingbill.html"
+when "scrape_emails"
+  MpUrl.scrape_emails
 end

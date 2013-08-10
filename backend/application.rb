@@ -16,6 +16,7 @@ API_KEY = 'oeOq1vsorc6YV1b7dbvf+lPQyBeMWFmJFbywI2kJERc'
 require_relative 'app/helpers'
 require_relative 'app/models/bill'
 require_relative 'app/models/person'
+require_relative 'app/models/mpurl'
 
 LIMIT = 15
 
