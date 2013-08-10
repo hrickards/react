@@ -379,7 +379,7 @@ html {
 	user-select: none;
 }
 
-#view-nav img {
+#view-nav img, #back img {
 	width: 100%;
 }
 
