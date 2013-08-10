@@ -136,3 +136,23 @@ def constituency_loc_real(constituency)
     {lat: 0, lng: 0}
   end
 end
+
+def fix_name(name)
+  puts name
+  first_name, last_name = name.split
+
+  case first_name
+  when "Ed"
+    "Edward #{last_name}"
+  when "Steve"
+    "Steven #{last_name}"
+  when "VInce"
+    "Vincent #{last_name}"
+  else
+    if name == "Nick Boles"
+      "Nicholas Boles"
+    elsif name == "Nicholas Brown"
+      "Nick Brown"
+    end
+  end
+end
