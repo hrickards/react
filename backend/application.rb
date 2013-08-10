@@ -57,7 +57,7 @@ module OpenParliament
         requires :mpid, type: Integer, desc: "member_id of local MP, as in TWFY and Public Whip."
       end
       get ':slug/:mpid' do
-        bill = Bill.find_by_slug params[:slug]
+        bill = Bill.find_by slug: params[:slug]
         bill.mp_view params[:mpid]
       end
 
@@ -67,7 +67,7 @@ module OpenParliament
         requires :type, type: Integer, desc: "The type of vote given: 1 for positive, 0 for negative"
       end
       put ':slug' do
-        Bill.find_by_slug(params[:slug]).vote params[:type]
+        Bill.find_by(slug: params[:slug]).vote params[:type]
       end
     end
 

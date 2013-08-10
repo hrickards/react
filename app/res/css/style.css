@@ -43,7 +43,7 @@ html {
 	top: 53px;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	background-color: white;
+	background: white;
 }
 
 .loading {
@@ -213,7 +213,6 @@ html {
 	position:absolute;
 	top:1em;
 	right:1em;
-	z-index:1;
 	opacity:1!important;
 	margin:0;
 	padding:10px;
@@ -313,6 +312,7 @@ html {
 	display: block;
 	width: 100%;
 	border-bottom: 3px #E8E8E8 solid;
+	font-size: 1.3em;
 }
 
 .button {
@@ -349,6 +349,16 @@ html {
 	top:1px;
 }
 
+.your-mp {
+	background-color: rgba(255, 255, 255, 0.6);
+	width: 100%;
+	height: 140px;
+}
+
+.my-mp h2 {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
 /*make each menu take the whole page when on a mobile and hide the supper menu*/
 @media (max-width: 900px){
 	.nav-pane {
@@ -356,7 +366,7 @@ html {
 	}
 }
 
-#view-nav {
+#view-nav , #back{
 	float: left;
 	margin: 5px 10px 5px 5px;
 	height: 43px;
@@ -369,7 +379,7 @@ html {
 	user-select: none;
 }
 
-#view-nav img {
+#view-nav img, #back img {
 	width: 100%;
 }
 
@@ -425,6 +435,13 @@ html {
 	margin: 0 auto;
 	position: relative;
 	bottom: -2px;
+}
+
+#mp-image {
+	width: 90px;
+	height: 120px;
+	float: left;
+	margin: 5px 15px 5px 15px;
 }
 
 ::-webkit-input-placeholder {

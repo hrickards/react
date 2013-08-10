@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>re: Act</title>
+		<title>re:ACT</title>
 		
 		<meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./res/css/style.css" />
@@ -67,10 +67,17 @@
 						<h2>Set your MP</h2>
 						<div class="form">
 							<label for="pcode">Postcode</label>
-							<input placeholder="Postcode" id="pcode"></input>
+							<input placeholder="Postcode" id="pcode" type="postcode"></input>
 							<label for="con">Constituency</label>
 							<input placeholder="Constituency" id="con"></input>
-							<div class="button">Find</div>
+							<div class="button" id="set-mp">Set MP</div>
+						</div>
+						<div class="your-mp">
+							<div id="mp-image"></div>
+							<br>
+							<h3 id="name"></h3>
+							<h3 id="party"></h3>
+							<h3 id="mp-error"></h3>
 						</div>
 					</div>
 

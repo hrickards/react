@@ -1,63 +1,77 @@
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Open Parliament</title>
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<meta name="viewport" content="width=device-width" />
-		<link rel="stylesheet" type="text/css" media="screen" href="../res/css/bill-view.css" />
-		<meta name="description" content=""/>
-		<meta name="keywords" content="">
-	</head>
-	<body>
-		<div class="top-bar">
-			<div class="title-bar">
-				<div id="view-nav">&#9776</div>
-				<img class="loading" src="../resources/img/ajax-loader.gif"/>
-				<h1><span id="open">Open</span> Parliament</h1>
-			</div>
-		</div>
-		<div class="content" id="doc">
-			<div class="holder">
-				</br>
-				<div id="image">
-          <div id="title"><%= @bill.humanized_slug %></div>
-          <img src="<%= @bill.large_photo %>" id="img" width="770" >
-				</div>
-				<div id="summary">
-					<h3>&nbsp;&nbsp;&nbsp;&nbsp;Summary:</h3>
-          &nbsp;<%= @bill.description %>
-				</div></br>
-				<div id="progress">
-					<img src="../res/img/progress.png" id="progimage">
-					</br>
-          <p><%= @bill.humanized_last_event %></p>
-				</div>
-				<div id="social">
-					<div id="public">
-						Public Opinion
-					</div>
-					<div id="af">
-						<img id="socialbar" src="../res/img/voting.png">
-					</div>
-					<div id="view">
-						Click to see your local MP's view.
-					</div>
-					<br>
-					<div id="person">
-						<div id="map">
-							<img id="mmm"src="../res/img/map.png">
-						</div>
-						<!--<div id="iam">
-							<h3>I am:</h3>
-							<div id="buttons">
-								<h2>For</h2>
-								<h2>Against</h2>
-							</div>
-						/</div>-->
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>re:ACT</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="load_view.js"></script>
+    <script src="vote.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=false"></script>
+    <script src="../res/js/map.js"></script>
+    <meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" media="screen" href="../res/css/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../res/css/bill-view.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../res/css/scroll-bars.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./<%= @bill.slug %>/votebar.css" />
+    <meta name="description" content=""/>
+    <meta name="keywords" content="">
+  </head>
+  <body>
+    <div class="page">
+      <div class="top-bar"><div id="back"><img src="../res/img/back.png"></div><div class="title-bar"><img id="logo" src="../res/img/logo.png"></div></div>
+      <div class="lower" style="overflow: scroll">
+        <div class="holder" id="doc">
+          </br>
+          <div id="image">
+            <div id="title"><%= @bill.semi_humanized_slug %></div>
+            <img src="<%= @bill.large_photo %>" id="img" width="770" >
+          </div>
+          <div id="summary">
+            <h3>&nbsp;&nbsp;&nbsp;&nbsp;Summary:</h3>
+            &nbsp;<%= @bill.description %>
+          </div></br>
+          <div id="progress">
+            <img src="http://harryrickards.com/images/legend.gif" style=" margin-right: 108; float: right; ">
+            <img src="<%= @bill.diagram %>" id="progimage">
+            </br>
+            <p><%= @bill.humanized_last_event %></p>
+          </div>
+          <div id="social">
+            <div id="public">
+              Public Opinion
+            </div>
+            <div id="af">
+              <div id="votebar">
+                <div id="yesbar">
+                  <p id="yes_percentage"><%= @yes %>%</p>
+                  <div id="up">
+                    <img src="../res/img/up.png" id="up_img"><span id="upvotes"><%= @bill.upvotes %></span>
+                  </div>
+                </div>
+                <div id="nobar">
+                  <p id="no_percentage"><%= 100 - @yes %>%</p>
+                  <div id="down">
+                    <img src="../res/img/down.png" id="down_img"><span id="downvotes"><%= @bill.downvotes %></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="view">
+            </div>
+            <br>
+            <div id="person">
+              <div id="map_canvas" style="height: 100%"></div>
+              <!--<div id="iam">
+                <h3>I am:</h3>
+                <div id="buttons">
+                  <h2>For</h2>
+                  <h2>Against</h2>
+                </div>
+                /</div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

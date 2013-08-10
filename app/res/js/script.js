@@ -15,26 +15,62 @@ $('document').ready(function(){
 	$('#loading-small').hide();
 
 	resizeStuff();
-	setFeed("");
 	setPinned();
+	setFeed("");
 
 	if($('.pinned').length !== 0) {
 		$('#pinned').addClass("active");
+		setPinnedFeed();
 	} else {
 		$('#new').addClass("active");
+		setFeed("");
 	}
 
-	/*$('.ground').live('mouseenter', function() {
-		console.log("bill enter");	
-		$(this).next(".fade").css('display', 'none');
-		$(this).next(".appear").css('display', 'block');
-	}).live('mouseleave', function() {	
-		console.log("bill leave");
-		$(this).next(".fade").css('display', 'block');
-		$(this).next(".appear").css('display', 'none');
-	});*/
+	$('.bill').live("click", function(){
+		window.open("/bills/"+$(this).attr('id'), "_parent");
+	});
+
+	$('#set-mp').click(function(){
+		jqXHR.abort();
+		$('.bill-feed').empty();
+		var con = $('#con').val();
+		var pcode = $('#pcode').val().replace(" ", "");
+		var key = 'FqQ7HAE6VXorA8NhKHAmUeW5';
+		var url = 'http://www.theyworkforyou.com/api/getMP?key=' + key + '&postcode=' + pcode + '&constituency=' + con + '&&output=js';
+		console.log(url);
+
+		$('#name').text("");
+		$('#party').text("");
+		$('#mp-image').css('background', "");
+		$('#mp-error').text("");
+
+		$.ajax({
+			url: url,
+			dataType: 'jsonp',
+			timeout: 10000,
+		}).success(function(data){
+			var id = data['member_id'];
+			var name = data['first_name'] + " " + data['last_name'];
+			var party = data['party'];
+			var image = "http://theyworkforyou.com" + data['image'];
+			console.log(id + name + party + " " + image);
+			if(id != undefined){
+				createCookie("mp", id, 100);
+				$('#name').text(name);
+				$('#party').text(party);
+				$('#mp-image').css('background', "url('" + image + "') no-repeat 50% 50%");
+			} else {
+				$('#mp-error').text("MP not found...");
+			}
+		}).error(function(){
+			console.log("fail");
+			$('#mp-error').text("Something went wrong...");
+		});
+	});
 
 	$('#my-mp').click(function(){
+		closeNav();
+		$('.content').css('background', "white url('./res/img/westminster.jpg') no-repeat 50% 50%");
 		$('.bill-feed').empty();
 		$('.load-more').hide();
 		$('.my-mp').show();
@@ -42,12 +78,20 @@ $('document').ready(function(){
 	});
 
 	$('#new').click(function(){
+		$('#loading-big').css('visibility', 'visible');
+		$('.content').css('background', "white");
 		setFeed("");
 	});
 
-	$('.title').not('#categories').click(function(){
+	$('.title').not('#categories').not('#my-mp').click(function(){
 		closeNav();
-		$('#loading-big').css('visibility', 'hidden');
+		$('.bill-feed').empty();
+		$('.content').css('background', "white");
+		//$('#loading-big').css('visibility', 'hidden');
+	});
+
+	$('#pinned').click(function(){
+		setPinnedFeed();
 	});
 
 	$('.icon').click(function(e){
@@ -111,6 +155,7 @@ $('document').ready(function(){
 
 	$('.category').on("click", function(){
 		$('.my-mp').hide();
+		$('.content').css('background', "white");
 		jqXHR.abort();
 		setFeed($(this).text().replace(" ", "_"));
 	}).mouseenter(function(){
@@ -183,10 +228,12 @@ $('document').ready(function(){
 		} else {
 			query = "";
 		}
-		var url = 'http://harryrickards.com/api/bills.json?' + query + "&limit=" + limit;
+		var url = "http://harryrickards.com/api/bills.json?limit=" + limit;
 		console.log(url);
 		//get bill info
 		jqXHR = $.ajax({
+			data: {query:[category]},
+			traditional: 'false',
     		url: url,
     		dataType: 'jsonp',
     		timeout: 20000,
@@ -220,7 +267,8 @@ $('document').ready(function(){
 
 	function writeResultsToPage(data){
 		$.each(data, function(index, datum) {
-			var html = "<div class='bill'>";
+			console.log(datum['slug']);
+			var html = "<div class='bill' id='" + datum['slug'] + "'>";
 			html += "<div class='ground'></div>";
 			html += "<h2 class='fade'><span>" + datum['title'] + "</span></h2>";
 			html += "<span class='appear type'>" + datum['type'] + "</span>";
@@ -279,16 +327,29 @@ $('document').ready(function(){
 	}
 
 	function setPinned() {
-		var categories = readCookie("pins").split("||");
-		var length = categories.length;
+		var categories = readCookie("pins")
+		if(categories != null){
+			categories = categories.split("||");
+			var length = categories.length;
 
-		for(i=1; i<length; i++){
-			var $cat = $('#'+categories[i])
-			var $pinned = $cat.clone(true);
-			$cat.addClass("added");
-			$pinned.children('.pin').attr("src", "./res/img/remove.png").addClass("remove").removeClass("pin").removeAttr("style");
-			$pinned.addClass("pinned").insertAfter($('#pinned'));
+			for(i=1; i<length; i++){
+				var $cat = $('#'+categories[i])
+				var $pinned = $cat.clone(true);
+				$cat.addClass("added");
+				$pinned.children('.pin').attr("src", "./res/img/remove.png").addClass("remove").removeClass("pin").removeAttr("style");
+				$pinned.addClass("pinned").insertAfter($('#pinned'));
+			}
 		}
+	}
+
+	function setPinnedFeed(){
+		var query = new Array();
+		$('.my-mp').hide();
+		jqXHR.abort();
+		$('.pinned').each(function(){
+			query.push($(this).text());
+		});
+		setFeed(query);
 	}
 
 	function toggleNav(){

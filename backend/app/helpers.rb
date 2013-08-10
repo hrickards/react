@@ -120,3 +120,19 @@ def gen_date(documents, events)
   }.reject { |date| date.nil? }.select { |date| date <= today }.reverse
   dates.last
 end
+
+def constituency_loc(constituency)
+  Cachy.cache("const" + constituency, hash_key: true) {constituency_loc_real constituency }
+end
+
+def constituency_loc_real(constituency)
+  begin
+    puts constituency
+    # TODO Move this somewhere else
+    twfy_client = Twfy::Client.new 'FqQ7HAE6VXorA8NhKHAmUeW5'
+    location = twfy_client.geometry name: constituency
+    {lat: location.centre_lat, lng: location.centre_lon}
+  rescue
+    {lat: 0, lng: 0}
+  end
+end

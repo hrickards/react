@@ -1,0 +1,58 @@
+@green: #070;
+@red: #700;
+@yes: 0.6;
+@no: 0.4;
+@color: #000;
+.gradient (@color){
+background: -moz-linear-gradient(top,  @color - #222 0%, @color 50%, @color - #222 100%); 
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@color - #222), color-stop(50%,@color), color-stop(100%,@color - #222)); 
+background: -webkit-linear-gradient(top,  @color - #222 0%,@color 50%,@color - #222 100%);
+background: -o-linear-gradient(top,  @color - #222 0%,@color 50%,@color - #222 100%); 
+background: -ms-linear-gradient(top,  @color - #222 0%,@color 50%,@color - #222 100%); 
+background: linear-gradient(to bottom,  @color - #222 0%,@color 50%,@color - #222 100%); 
+}
+.spacing{
+     margin: 0px;
+    padding: 0px;
+}
+#votebar{
+    height: 70px;
+    width: 100%;
+    margin:0 auto;
+}
+#yesbar{
+    height: 100%;
+    float: left;
+    width: 100% * @yes;
+    .spacing;
+}
+#nobar{
+    .spacing;
+    height: 100%;
+    float: right;
+    width: 100% * @no;
+}
+#yesbar p{
+    height: 25%;
+    color: #ddd;
+    border-right: 1px solid #ddd;
+    .gradient(@green);
+    border-radius: 3px 0px 0px 3px;
+    text-align: right;
+    .spacing;
+}
+#nobar p, #yesbar p{
+    box-shadow: 1px 1px 1px #777;
+}
+#nobar p{
+    border-radius: 0px 3px 3px 0px;
+    height: 25%;
+    .gradient(@red);
+    .spacing;
+    color: #ddd;
+}
+#up{
+    float: right;
+    vertical-align: center;
+    padding-right: 2%;
+}

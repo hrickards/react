@@ -140,7 +140,10 @@ class Bill
   # Uses mongo full text searching to find articles relevant to keywords
   def self.search(queries, limit, offset, keys=nil)
     keys = %w{title description slug humanized_slug large_photo type} unless keys
-    unless queries.nil? or queries.empty?
+    unless queries.nil? or queries.empty? or queries.reject { |q| q.empty? }.empty?
+      queries.map! { |q| q.rstrip }
+      queries.reject! { |q| q.empty? }
+      puts queries.inspect
       pseudo_limit = offset + limit
       queries.map { |query|
         (
@@ -148,7 +151,7 @@ class Bill
           self.fulltext_search(query, :index => 'description_index', :max_results=> limit, :return_scores => true)
         # ).select { |r, s| s > 0.5 }.map(&:first)
         )
-      }.flatten(1).sort_by { |r, s| r }.reverse.map(&:first)[offset..pseudo_limit].sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }
+      }.flatten(1).sort_by { |r, s| r }.reverse.map(&:first)[offset..pseudo_limit].sort_by { |r| r.date }.reverse.map { |r| select_keys r, keys }.uniq
     else
       self.desc(:date).skip(offset).limit(limit).map { |r| select_keys r, keys }
     end
@@ -162,7 +165,7 @@ class Bill
   def self.find_by_slug(slug)
     result = self.find_by(slug: slug)
     data = JSON.parse(result.to_json)
-    %w{humanized_slug large_photo}.each { |key| data[key] = result.send(key) }
+    %w{humanized_slug large_photo semi_humanized_slug humanized_last_event votes_agg}.each { |key| data[key] = result.send(key) }
     data
   end
 
@@ -237,6 +240,10 @@ class Bill
     self.events.last.first
   end
 
+  def semi_humanized_slug
+    "#{self.humanized_slug} #{self.leg_type.capitalize}"
+  end
+
   def mp_view(mpid)
     url = "http://www.publicwhip.org.uk/mp.php?mpid=#{mpid}&house=commons&display=allvotes"
     doc = Nokogiri::HTML cache_open(url)
@@ -250,5 +257,40 @@ class Bill
       vote: (yes.to_f/vals.count*100).to_i,
       loyal: (loyal.to_f/vals.count*100).to_i
     }
+  end
+
+  def votes_agg
+    # [
+    #  {
+    #    type: x,
+    #    location: y
+    #  }
+    # ]
+    twfy_client = Twfy::Client.new 'FqQ7HAE6VXorA8NhKHAmUeW5'
+    constituencies = twfy_client.constituencies.map { |c| c.name }
+
+    # TODO Do this properly
+    total_upvotes = self.upvotes
+    total_downvotes = self.downvotes
+    return [] if total_upvotes == 0 and total_downvotes == 0
+    votes = (0...total_upvotes).map { |i| constituencies[Random.rand(constituencies.count)] }.map { |loc| {'type' => 1, 'location' => loc} } + (0...total_downvotes).map { |i| constituencies[Random.rand(constituencies.count)] }.map { |loc| {'type' => 0, 'location' => loc} }
+
+    vs = votes.group_by { |vote| vote['location'] }.map { |location, votes| [location, votes.map { |vote| normalise_type(vote['type']) }] }.map { |location, types| [location, types.sum/types.count.to_f] }
+    avgs = vs.map { |location, avg| avg }
+
+    delta = avgs.max - avgs.min
+    delta = 1 if delta == 0
+    vs.map! { |location, avg| [location, (avg-avgs.min)/delta] }
+    vs.map! { |location, avg| [constituency_loc(location), avg] }
+
+    vs
+  end
+
+  def normalise_type(type)
+    if type.to_i == 1
+      return 1
+    else
+      return -1
+    end
   end
 end
