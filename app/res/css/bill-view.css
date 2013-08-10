@@ -135,6 +135,17 @@
  
 .lower {
 	height: 90%;
-	overflow-x: hidden; }
+	overflow-x: hidden !important; }
  
- 
+#contact_mp {
+  width: 30%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+#contact_button {
+  width: 100%;
+  background-color: #9D141B;
+  color: white;
+  font-weight: bold;
+}
