@@ -30,7 +30,7 @@ $('document').ready(function(){
 		window.open("/bills/"+$(this).attr('id'), "_parent");
 	});
 
-	$('#back').live("click", function () {
+	$('#back').click( function () {
 		window.open("/", "_parent");
 		console.log("back clicked!");
 	});
