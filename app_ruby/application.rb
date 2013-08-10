@@ -4,10 +4,12 @@ Bundler.require
 module OpenParliament
   class App < Sinatra::Base
     get '/bills/load_view.js' do
+      content_type 'text/javascript'
       File.read(File.join('views', 'load_view.js'))
     end
 
     get '/bills/vote.js' do
+      content_type 'text/javascript'
       File.read(File.join('views', 'vote.js'))
     end
 

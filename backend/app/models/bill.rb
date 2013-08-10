@@ -165,7 +165,7 @@ class Bill
   def self.find_by_slug(slug)
     result = self.find_by(slug: slug)
     data = JSON.parse(result.to_json)
-    %w{humanized_slug large_photo semi_humanized_slug humanized_last_event}.each { |key| data[key] = result.send(key) }
+    %w{humanized_slug large_photo semi_humanized_slug humanized_last_event votes_agg}.each { |key| data[key] = result.send(key) }
     data
   end
 
@@ -257,5 +257,38 @@ class Bill
       vote: (yes.to_f/vals.count*100).to_i,
       loyal: (loyal.to_f/vals.count*100).to_i
     }
+  end
+
+  def votes_agg
+    # [
+    #  {
+    #    type: x,
+    #    location: y
+    #  }
+    # ]
+    twfy_client = Twfy::Client.new 'FqQ7HAE6VXorA8NhKHAmUeW5'
+    constituencies = twfy_client.constituencies.map { |c| c.name }
+
+    # TODO Do this properly
+    total_votes = self.upvotes + self.downvotes
+    votes = (0...10*self.upvotes).map { |i| constituencies[Random.rand(constituencies.count)] }.map { |loc| {'type' => 1, 'location' => loc} } + (0...10*self.downvotes).map { |i| constituencies[Random.rand(constituencies.count)] }.map { |loc| {'type' => 0, 'location' => loc} }
+
+    vs = votes.group_by { |vote| vote['location'] }.map { |location, votes| [location, votes.map { |vote| normalise_type(vote['type']) }] }.map { |location, types| [location, types.sum/types.count.to_f] }
+    avgs = vs.map { |location, avg| avg }
+
+    delta = avgs.max - avgs.min
+    delta = 1 if delta == 0
+    vs.map! { |location, avg| [location, (avg-avgs.min)/delta] }
+    vs.map! { |location, avg| [constituency_loc(location), avg] }
+
+    vs
+  end
+
+  def normalise_type(type)
+    if type.to_i == 1
+      return 1
+    else
+      return -1
+    end
   end
 end
