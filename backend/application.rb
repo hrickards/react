@@ -71,6 +71,15 @@ module OpenParliament
       end
     end
 
+    desc "Get MP email"
+    params do
+      requires :mpid, type: String, desc: "MP ID"
+    end
+    get 'mp/:mpid' do
+      Person.get_email params[:mpid]
+    end
+
+
     add_swagger_documentation base_path: 'http://harryrickards.com/api'
   end
 end

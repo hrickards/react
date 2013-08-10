@@ -47,6 +47,12 @@ class Person
     end
   end
 
+  def self.get_email(mpid)
+    {
+      email: 'charles.hendry.mp@parliament.uk'
+    }
+  end
+
   # Very hackish --- no better way we can use?
   protected
   def filter_names(people)
