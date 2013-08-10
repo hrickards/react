@@ -145,8 +145,12 @@ def fix_name(name)
   when "Ed"
     "Edward #{last_name}"
   when "Steve"
-    "Steven #{last_name}"
-  when "VInce"
+    if last_name == "McCabe"
+      "Stephen McCabe"
+    else
+      "Steven #{last_name}"
+    end
+  when "Vince"
     "Vincent #{last_name}"
   else
     if name == "Nick Boles"

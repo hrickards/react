@@ -20,18 +20,20 @@ $(document).ready(function() {
       url: url
     }).done(function(data) {
       var html = "Your MP: " + data['vote']  + "% in favour, " + data['loyal'] + "% loyal to party.";
-      $('#view').html(html);
+      $('#actual_view').html(html);
     }).error(function() {
+      $('#actual_view').html("Your MP hasn't voted on this bill yet.");
       console.log("No data available for that MP and Bill");
     });
     $.ajax({
       url: "http://harryrickards.com/api/mp/" + mpId
     }).done(function(data) {
-      console.log(document.email)
+      var html = "<a href='mailto:" + data['email'] + "?subject=" + $('#title').text() + "' id='mailtolink' style='display:none'></a>";
+      $('.page').append(html);
     });
 
     $('#contact_button').click(function() {
-        window.open("http://www.writetothem.com/write?who=46828&pc=RH11+9BQ", "_blank");
+        document.getElementById('mailtolink').click();
     });
 	
 	$('#back').click(function(){
