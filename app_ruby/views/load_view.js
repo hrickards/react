@@ -28,11 +28,12 @@ $(document).ready(function() {
     $.ajax({
       url: "http://harryrickards.com/api/mp/" + mpId
     }).done(function(data) {
-      console.log(document.email)
+      var html = "<a href='mailto:" + data['email'] + "?subject=" + $('#title').text() + "' id='mailtolink' style='display:none'></a>";
+      $('.page').append(html);
     });
 
     $('#contact_button').click(function() {
-        window.open("http://www.writetothem.com/write?who=46828&pc=RH11+9BQ", "_blank");
+        document.getElementById('mailtolink').click();
     });
 	
 	$('#back').click(function(){
