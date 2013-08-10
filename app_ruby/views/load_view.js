@@ -22,6 +22,7 @@ $(document).ready(function() {
       var html = "Your MP: " + data['vote']  + "% in favour, " + data['loyal'] + "% loyal to party.";
       $('#view').html(html);
     }).error(function() {
+      $('#view').html("Your MP hasn't voted on this bill yet.");
       console.log("No data available for that MP and Bill");
     });
     $.ajax({
