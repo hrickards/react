@@ -366,7 +366,7 @@ html {
 	}
 }
 
-#view-nav {
+#view-nav , #back{
 	float: left;
 	margin: 5px 10px 5px 5px;
 	height: 43px;

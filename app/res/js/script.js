@@ -26,6 +26,14 @@ $('document').ready(function(){
 		setFeed("");
 	}
 
+	$('.bill').live("click", function(){
+		window.open("/bills/"+$(this).attr('id'), "_parent");
+	});
+
+	$('#back').click(function () {
+		window.open("/", "_parent");
+	});
+
 	$('#set-mp').click(function(){
 		jqXHR.abort();
 		$('.bill-feed').empty();
@@ -263,7 +271,8 @@ $('document').ready(function(){
 
 	function writeResultsToPage(data){
 		$.each(data, function(index, datum) {
-			var html = "<div class='bill'>";
+			console.log(datum['slug']);
+			var html = "<div class='bill' id='" + datum['slug'] + "'>";
 			html += "<div class='ground'></div>";
 			html += "<h2 class='fade'><span>" + datum['title'] + "</span></h2>";
 			html += "<span class='appear type'>" + datum['type'] + "</span>";

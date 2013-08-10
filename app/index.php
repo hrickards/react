@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>re: Act</title>
+		<title>re:ACT</title>
 		
 		<meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./res/css/style.css" />

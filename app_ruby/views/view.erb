@@ -6,11 +6,12 @@
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="load_view.js"></script>
     <script src="vote.js"></script>
+	<script src="../res/js/script.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=false"></script>
     <script src="../res/js/map.js"></script>
     <meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" media="screen" href="../res/css/style.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../res/css/bill-view.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../res/css/style.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../res/css/scroll-bars.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="./<%= @bill.slug %>/votebar.css" />
     <meta name="description" content=""/>
@@ -18,7 +19,7 @@
   </head>
   <body>
     <div class="page">
-      <div class="top-bar"><div id="view-nav"><img src="../res/img/more.png"></div><div class="title-bar"><img id="logo" src="../res/img/logo.png"></div></div>
+      <div class="top-bar"><div id="back"><img src="../res/img/back.png"></div><div class="title-bar"><img id="logo" src="../res/img/logo.png"></div></div>
       <div class="lower" style="overflow: scroll">
         <div class="holder" id="doc">
           </br>
