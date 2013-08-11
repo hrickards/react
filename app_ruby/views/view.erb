@@ -42,6 +42,9 @@
           <div id="summary">
             <h3 style="margin-bottom: 0;">Summary:</h3>
             <%= @bill.description %>
+            <% unless @bill.documents.empty? %>
+              <a href="<%= @bill.documents.first[1] %>" target="_blank">See full bill.</a>
+            <% end %>
           </div></br>
           <div id="progress">
             <img src="<%= @bill.diagram %>" id="progimage">

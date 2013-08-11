@@ -19,7 +19,7 @@ $(document).ready(function() {
     $.ajax({
       url: url
     }).done(function(data) {
-      var html = "Your MP: " + data['vote']  + "% in favour, " + data['loyal'] + "% loyal to party.";
+      var html = "Your MP last voted " + data['last_vote'] + ".";
       $('#actual_view').html(html);
     }).error(function() {
       $('#actual_view').html("Your MP hasn't voted on this bill yet.");
@@ -33,6 +33,7 @@ $(document).ready(function() {
     });
 
     $('#contact_button').click(function() {
+        $(this).css('margin-top', '16px');
         document.getElementById('mailtolink').click();
     });
 	

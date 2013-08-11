@@ -268,6 +268,7 @@ class Bill
     loyal = vals.select { |vote, loyalty| loyalty == "Loyal" }.count
 
     {
+      last_vote: nice_vote(vals.last.first),
       vote: (yes.to_f/vals.count*100).to_i,
       loyal: (loyal.to_f/vals.count*100).to_i
     }

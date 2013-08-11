@@ -160,3 +160,11 @@ def fix_name(name)
     end
   end
 end
+
+def nice_vote(vote)
+  if vote == "aye"
+    "for"
+  else
+    "against"
+  end
+end

@@ -9,6 +9,17 @@ function vote(val) {
     $('#down_img').attr('src', '../res/img/down-active.png')
   }
 
+  var upvotes = parseInt($('#upvotes').html());
+  var downvotes = parseInt($('#downvotes').html());
+  console.log([upvotes, downvotes]);
+  var yes = Math.floor (upvotes / (upvotes + downvotes) * 100);
+
+  $('#yes_percentage').html(yes + "%");
+  $('#no_percentage').html((100-yes) + "%");
+
+  $('#nobar').css('width', (100-yes) + "%");
+  $('#yesbar').css('width', yes + "%");
+
   var url = "http://harryrickards.com/api/bills/" + document.URL.split("/")[4];
   $.ajax({
     url: url,
@@ -19,15 +30,6 @@ function vote(val) {
       url: url,
       type: 'GET'
     }).done(function(data) {
-      var upvotes = data['upvotes'];
-      var downvotes = data['downvotes'];
-      var yes = Math.floor (upvotes / (upvotes + downvotes) * 100)
-
-      $('#yes_percentage').html(yes + "%");
-      $('#no_percentage').html((100-yes) + "%");
-
-      $('#nobar').css('width', (100-yes) + "%");
-      $('#yesbar').css('width', yes + "%");
     });
   });
 }
