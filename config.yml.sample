@@ -1,0 +1,5 @@
+environment: development
+bills_limit: 15
+api_keys:
+  bing: api_key_here
+  twfy: api_key_here

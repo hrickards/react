@@ -21,17 +21,14 @@ class Person
   end
 
   def photo
-    # TODO Move this somewhere else
-    twfy_client = Twfy::Client.new 'FqQ7HAE6VXorA8NhKHAmUeW5'
-
-    lords = twfy_client.lords(search: @slug)
-    mps = twfy_client.mps(search: @slug)
+    lords = TWFY_CLIENT.lords(search: @slug)
+    mps = TWFY_CLIENT.mps(search: @slug)
 
     # No elsif with unless
     if lords.is_a? Array and not lords.empty? and @lord
-      person = twfy_client.lord id: filter_names(lords).first.person_id
+      person = TWFY_CLIENT.lord id: filter_names(lords).first.person_id
     elsif mps.is_a? Array and not mps.empty? and not @lord
-      person = twfy_client.mp id: filter_names(mps).first.person_id
+      person = TWFY_CLIENT.mp id: filter_names(mps).first.person_id
     else
       # Return empty string if no-one found
       return ""

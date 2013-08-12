@@ -1,7 +1,5 @@
 class Bill
   BASE_URL = 'http://services.parliament.uk'
-  MP_VOTES = get_votes_wrapper DB['mp_votes']
-  LORDS_VOTES = get_votes_wrapper DB['lords_votes']
   
   include Mongoid::Document
   include Mongoid::FullTextSearch
@@ -13,7 +11,6 @@ class Bill
   field :description, type: String
   field :url, type: String
   field :diagram, type: String
-  field :divisions, type: Array
   field :slug, type: String
   field :upvotes, type: Integer
   field :downvotes, type: Integer
@@ -47,11 +44,6 @@ class Bill
     self.save
   end
 
-  # Scrape the votes (divisions) for each bill
-  def self.scrape_divisions
-    self.all.each { |bill| bill.scrape_divisions }
-  end
-
   # Scrape all diagrams
   def self.scrape_diagrams
     self.all.each { |bill| bill.scrape_diagram }
@@ -69,20 +61,6 @@ class Bill
     FileUtils.cp filename, orig_filename unless File.exist? orig_filename
     puts self.slug
     %x{convert #{orig_filename} -transparent white #{filename}}
-  end
-
-  # Scrape the votes for an individual bill
-  def scrape_divisions
-    stitle = slugify_title self.title
-    mp_division_ids = MP_VOTES[stitle] || []
-    lords_division_ids = LORDS_VOTES[stitle] || []
-
-    mp_divisions = mp_division_ids.map { |id| DB['mp_votes'].find_one(BSON::ObjectId(id)) }.map { |div| parse_division div }
-    lords_divisions = lords_division_ids.map { |id| DB['lords_votes'].find_one(BSON::ObjectId(id)) }.map { |div| parse_division div }
-
-    self.divisions = {mps: mp_divisions, lords: lords_divisions}
-    self.save
-    puts "Saved divisions"
   end
 
   # Scrape diagram
@@ -236,7 +214,7 @@ class Bill
     sleep 0.05
     query = URI.escape self.humanized_slug
     url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?Query=%27#{query}%27&$top=50&$format=json&ImageFilters=%27Size%3ALarge%27"
-    response = HTTParty.get url, :basic_auth => {:username => '', :password => API_KEY}, :format => :json
+    response = HTTParty.get url, :basic_auth => {:username => '', :password => CONFIG['api_keys']['bing']}, :format => :json
     begin
       images = response.first.last["results"].map { |res| [res["Width"], res["MediaUrl"]] }
       image = images.select { |image| image.first.to_i >= 770 }.first
@@ -258,7 +236,7 @@ class Bill
     "#{self.humanized_slug} #{self.leg_type.capitalize}"
   end
 
-  def mp_view(mpid)
+  def mp_voting_record(mpid)
     url = "http://www.publicwhip.org.uk/mp.php?mpid=#{mpid}&house=commons&display=allvotes"
     doc = Nokogiri::HTML cache_open(url)
     rows = doc.xpath("//table[@class='votes']//tr")
@@ -281,8 +259,7 @@ class Bill
     #    location: y
     #  }
     # ]
-    twfy_client = Twfy::Client.new 'FqQ7HAE6VXorA8NhKHAmUeW5'
-    constituencies = twfy_client.constituencies.map { |c| c.name }
+    constituencies = TWFY_CLIENT.constituencies.map { |c| c.name }
 
     # TODO Do this properly
     total_upvotes = self.upvotes

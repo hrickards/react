@@ -1,20 +1,34 @@
 source 'https://rubygems.org'
 
+# HTML parsing and sanitisation
 gem 'nokogiri'
 gem 'sanitize'
+
+# API gems
 gem 'twfy'
-gem 'pry'
+gem 'httparty'
+
+# Request caching
 gem 'cachy'
 gem 'redis'
+
+# Mongo
 gem 'mongoid'
 gem 'mongo'
 gem 'bson_ext'
 gem 'mongoid_fulltext'
+
+# Javascript execution (used for taking screenshots of pages)
 gem 'phantomjs.rb'
-gem 'unicorn'
+
+# Web server gems
 gem 'grape'
 gem 'rack-contrib'
 gem 'grape-swagger'
+
+# Deployment gems
 gem 'capistrano'
-gem 'httparty'
 gem 'puma'
+
+# Open a REPL in a specific context
+gem 'pry'
