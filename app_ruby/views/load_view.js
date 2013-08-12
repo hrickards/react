@@ -33,7 +33,6 @@ $(document).ready(function() {
     });
 
     $('#contact_button').click(function() {
-        $(this).css('margin-top', '16px');
         document.getElementById('mailtolink').click();
     });
 	
