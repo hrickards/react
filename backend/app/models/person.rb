@@ -44,10 +44,29 @@ class Person
     end
   end
 
-  def self.get_email(mpid)
-    {
-      email: MpUrl.find_by(mpid: mpid).email
-    }
+  # Get the email address from an MP TWFY person_id. Cached.
+  def self.get_email(person_id)
+    Cachy.cache("mpemail_#{person_id}") { self.get_email_real(person_id) }
+  end
+
+  # Get the email address from an MP TWFY person_id
+  def self.get_email_real(person_id)
+    # Get the MP info from the TWFY API
+    info = TWFY_CLIENT.mp_info id: person_id
+    # From this, retrieve the DODS Id from the bbc_profile_url
+    # e.g. http://news.bbc.co.uk/democracylive/hi/representatives/profiles/25603.stm
+    dods_id = info.bbc_profile_url.split("/").last.split(".").first
+
+    # Query the Parliament members API to get addresses info for that MP using their DODS id
+    url = "http://data.parliament.uk/membersdataplatform/services/mnis/members/query/refDods=#{dods_id}/Addresses/"
+    response = HTTParty.get url
+
+    # Find the first non-nil email address and return it
+    email = response['Members']['Member']['Addresses']['Address'].
+      map { |address| address['Email'] }.
+      reject { |address| address.nil? }.
+      first
+    { email: email }
   end
 
   # Very hackish --- no better way we can use?

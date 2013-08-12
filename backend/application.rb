@@ -32,7 +32,6 @@ TWFY_CLIENT = Twfy::Client.new CONFIG['api_keys']['twfy']
 require_relative 'app/helpers'
 require_relative 'app/models/bill'
 require_relative 'app/models/person'
-require_relative 'app/models/mpurl'
 
 # A JSONP API that can be run with Rack
 module ReAct

@@ -123,25 +123,6 @@ def constituency_loc_real(constituency)
   end
 end
 
-# Tweak names from the parliament.uk site to make them compatible with the TheyWorkForYou API
-def fix_name(name)
-  first_name, last_name = name.split
-
-  case first_name
-  when "Ed"
-    "Edward #{last_name}"
-  when "Steve"
-    return "Stephen McCabe" if last_name == "McCabe"
-    "Steven #{last_name}"
-  when "Vince"
-    "Vincent #{last_name}"
-  else
-    return "Nicholas Boles" if name == "Nick Boles"
-    return "Nick Brown" if name == "Nicholas Brown"
-    name
-  end
-end
-
 # Turn aye/naye into for/against
 def humanify_vote(vote)
   return "for" if vote == "aye"

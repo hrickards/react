@@ -27,7 +27,6 @@ gem 'rack-contrib'
 gem 'grape-swagger'
 
 # Deployment gems
-gem 'capistrano'
 gem 'puma'
 
 # Open a REPL in a specific context

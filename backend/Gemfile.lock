@@ -14,12 +14,6 @@ GEM
     builder (3.0.4)
     cachy (0.3.1)
       mini_memory_store
-    capistrano (2.15.5)
-      highline
-      net-scp (>= 1.0.0)
-      net-sftp (>= 2.0.0)
-      net-ssh (>= 2.0.14)
-      net-ssh-gateway (>= 1.1.0)
     coderay (1.0.9)
     descendants_tracker (0.0.1)
     grape (0.5.0)
@@ -36,13 +30,11 @@ GEM
       grape (>= 0.2.0)
       kramdown
     hashie (2.0.5)
-    highline (1.6.19)
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
     i18n (0.6.4)
     json (1.8.0)
-    kgio (2.8.0)
     kramdown (1.1.0)
     method_source (0.8.1)
     mini_memory_store (0.1.0)
@@ -60,13 +52,6 @@ GEM
     moped (1.5.0)
     multi_json (1.7.8)
     multi_xml (0.5.5)
-    net-scp (1.1.2)
-      net-ssh (>= 2.6.5)
-    net-sftp (2.1.2)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.6.8)
-    net-ssh-gateway (1.2.0)
-      net-ssh (>= 2.6.5)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     origin (1.1.0)
@@ -85,7 +70,6 @@ GEM
       rack (>= 0.9.1)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
-    raindrops (0.11.0)
     redis (3.0.4)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
@@ -95,10 +79,6 @@ GEM
       paginator
     tzinfo (0.3.37)
     unicode_utils (1.0.0)
-    unicorn (4.6.3)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
     virtus (0.5.5)
       backports (~> 3.3)
       descendants_tracker (~> 0.0.1)
@@ -109,7 +89,6 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   cachy
-  capistrano
   grape
   grape-swagger
   httparty
@@ -124,4 +103,3 @@ DEPENDENCIES
   redis
   sanitize
   twfy
-  unicorn

@@ -1,4 +1,11 @@
-bind 'unix:///home/harry/open_parliament/backend/tmp/sock/unicorn.sock'
-pidfile "/home/harry/open_parliament/backend/tmp/puma/pid"
-state_path "/home/harry/open_parliament/backend/tmp/puma/state"
-activate_control_app 'tcp://0.0.0.0:5050', { auth_token: 'open' }
+# Config for the webserver
+
+require 'yaml'
+
+# Load the global config file to get directories from
+CONFIG = YAML.load_file File.join(__dir__, '../../config.yml')
+BASE_DIR = CONFIG['base_dir']
+
+bind "unix://#{BASE_DIR}/backend/tmp/sock/unicorn.sock"
+pidfile "#{BASE_DIR}/backend/tmp/puma/pid"
+state_path "#{BASE_DIR}/backend/tmp/puma/state"
