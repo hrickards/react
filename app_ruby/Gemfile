@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
+# Web gems
 gem 'puma'
 gem 'sinatra'
 gem 'httparty'
+
+# Turn a hash (with object[key]) into an object that allows object.key
 gem 'hashie'

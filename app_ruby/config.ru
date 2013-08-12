@@ -1,3 +1,4 @@
 require File.expand_path("../application", __FILE__)
 
-run OpenParliament::App
+# Run the app
+run ReAct::App
