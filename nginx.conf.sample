@@ -1,0 +1,45 @@
+upstream backend {
+	server unix:/home/harry/open_parliament/backend/tmp/sock/unicorn.sock fail_timeout=0;
+}
+
+upstream app_ruby {
+	server unix:/home/harry/open_parliament/app_ruby/tmp/sock/unicorn.sock fail_timeout=0;
+}
+
+server {
+	listen 80;
+	listen [::]:80 default ipv6only=on;
+
+	server_name localhost;
+
+	index index.html index.htm index.php;
+
+	access_log /var/log/nginx/localhost.access.log;
+	root /home/harry/open_parliament/app;
+
+	location /api {
+		proxy_pass http://backend;
+		proxy_redirect off;
+	}
+
+	location /bills {
+		proxy_pass http://app_ruby;
+		proxy_redirect off;
+	}
+
+	location /docs {
+		root /home/harry/open_parliament/docs;
+	}
+
+  location /images {
+          root /home/harry/open_parliament/backend/public;
+  }
+
+	location ~ \.php$ {
+		try_files $uri =404;
+		fastcgi_pass   unix:/tmp/php.socket;
+		fastcgi_index  index.php;
+		fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		include fastcgi_params;
+	}
+}

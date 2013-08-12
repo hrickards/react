@@ -31,3 +31,11 @@ Data
 We scrape data from parliament.uk ([services](http://services.parliament.uk) and [mps](http://www.parliament.uk/mps-lords-and-offices/mps/)), [PublicWhip](http://www.publicwhip.org.uk/), and also use the downloadable PublicWhip data.
 
 We also make heavy use of the [TheyWorkForYou](http://www.theyworkforyou.com/) API, and use the [Bing Image API](http://www.bing.com/dev/en-us/dev-center) for image search.
+
+Installation
+------------
+- Install mongo and redis.
+- Bundle install in `app_ruby` and `backend`.
+- Copy `config.yml.sample` to `config.yml` and add your API keys.
+- Copy `nginx.conf.sample` to your nginx config folder and add in your paths.
+- Start the puma servers in `app_ruby` and `backend`, and restart nginx.
