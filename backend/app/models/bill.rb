@@ -150,7 +150,7 @@ class Bill
   end
 
   def humanized_slug
-    alternate_slugify_title self.title
+    alternate_clean_title self.title
   end
 
   # Find a bill with the given slug
