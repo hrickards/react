@@ -8,9 +8,9 @@ CONFIG = YAML.load_file File.join(__dir__, '../config.yml')
 # Returns the percentage of upvotes on a given bill
 def votes_from_bill(bill)
   # If there are no votes, return a 50/50 split
-  return 50 if @bill.upvotes == 0 and @bill.downvotes == 0
+  return 50 if bill.upvotes == 0 and bill.downvotes == 0
   # Otherwise work at the percentage of upvotes and round it
-  (@bill.upvotes / (@bill.upvotes + @bill.downvotes).to_f * 100).round
+  (bill.upvotes / (bill.upvotes + bill.downvotes).to_f * 100).round
 end
 
 # Returns a bill and it's votes from the API given it's slug
