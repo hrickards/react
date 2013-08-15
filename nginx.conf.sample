@@ -1,39 +1,40 @@
-upstream backend {
-	server unix:/home/harry/open_parliament/backend/tmp/sock/unicorn.sock fail_timeout=0;
+upstream react_backend {
+	server unix:/home/harry/react/backend/tmp/sock fail_timeout=0;
 }
 
-upstream app_ruby {
-	server unix:/home/harry/open_parliament/app_ruby/tmp/sock/unicorn.sock fail_timeout=0;
+upstream react_app_ruby {
+	server unix:/home/harry/react/app_ruby/tmp/sock fail_timeout=0;
 }
 
 server {
-	listen 80;
-	listen [::]:80 default ipv6only=on;
 
-	server_name localhost;
+	listen   80; ## listen for ipv4
+	listen   [::]:80 default ipv6only=on; ## listen for ipv6
+
+	server_name  localhost;
 
 	index index.html index.htm index.php;
 
-	access_log /var/log/nginx/localhost.access.log;
-	root /home/harry/open_parliament/app;
+	access_log  /var/log/nginx/localhost.access.log;
+	root /home/harry/react/app;
 
 	location /api {
-		proxy_pass http://backend;
+		proxy_pass http://react_backend;
 		proxy_redirect off;
 	}
 
 	location /bills {
-		proxy_pass http://app_ruby;
+		proxy_pass http://react_app_ruby;
 		proxy_redirect off;
 	}
 
 	location /docs {
-		root /home/harry/open_parliament/docs;
+		root /home/harry/react/docs;
 	}
 
-  location /images {
-          root /home/harry/open_parliament/backend/public;
-  }
+        location /images {
+                root /home/harry/react/backend/public;
+        }
 
 	location ~ \.php$ {
 		try_files $uri =404;
@@ -42,4 +43,5 @@ server {
 		fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
 		include fastcgi_params;
 	}
+
 }
